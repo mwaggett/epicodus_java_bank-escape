@@ -7,13 +7,15 @@ public class Weapon {
   private int damage;
   private String nameOfWeapon;
   private int numberOfUses;
-  private boolean broken;
+  //private boolean broken;
+  private String personId;
 
   public Weapon (String nameOfWeapon, int damage) {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
     this.numberOfUses = 3;
     //this.broken = false;
+    this.personId = personId;
   }
 
   public int getId() {
@@ -31,6 +33,10 @@ public class Weapon {
  public int getNumberOfUses(){
    return numberOfUses;
  }
+
+public String getPersonId(){
+  return personId;
+}
 
   @Override
   public boolean equals(Object otherWeapon) {
@@ -73,7 +79,7 @@ public class Weapon {
      .addParameter("id", id)
      .executeUpdate();
 
-     String deletePersonWeapon = "DELETE FROM Person_weapons WHERE weapons_id = :id";
+     String deletePersonWeapon = "DELETE FROM people_weapons WHERE weapons_id = :id";
       con.createQuery(deletePersonWeapon)
       .addParameter("id", id)
       .executeUpdate();
