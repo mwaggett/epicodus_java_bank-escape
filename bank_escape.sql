@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: people; Type: TABLE; Schema: public; Owner: Molly; Tablespace: 
+-- Name: people; Type: TABLE; Schema: public; Owner: Molly; Tablespace:
 --
 
 CREATE TABLE people (
@@ -66,7 +66,7 @@ ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
--- Name: weapons; Type: TABLE; Schema: public; Owner: Molly; Tablespace: 
+-- Name: weapons; Type: TABLE; Schema: public; Owner: Molly; Tablespace:
 --
 
 CREATE TABLE weapons (
@@ -147,7 +147,7 @@ SELECT pg_catalog.setval('weapons_id_seq', 1, false);
 
 
 --
--- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: Molly; Tablespace: 
+-- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: Molly; Tablespace:
 --
 
 ALTER TABLE ONLY people
@@ -155,7 +155,7 @@ ALTER TABLE ONLY people
 
 
 --
--- Name: weapons_pkey; Type: CONSTRAINT; Schema: public; Owner: Molly; Tablespace: 
+-- Name: weapons_pkey; Type: CONSTRAINT; Schema: public; Owner: Molly; Tablespace:
 --
 
 ALTER TABLE ONLY weapons
@@ -175,4 +175,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-

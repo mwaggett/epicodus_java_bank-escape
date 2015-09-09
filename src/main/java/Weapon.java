@@ -53,9 +53,9 @@ public String getPersonId(){
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons (name_of_weapon) VALUES (:name_of_weapon);";
+      String sql = "INSERT INTO weapons (nameofweapon) VALUES (:nameofweapon);";
       this.id = (int) con.createQuery(sql, true)
-          .addParameter("name_of_weapon", name_of_weapon)
+          .addParameter("nameofweapon", nameofweapon)
           .executeUpdate()
           .getKey();
     }
@@ -64,9 +64,9 @@ public String getPersonId(){
   public void update(String nameOfWeapon) {
     this.nameOfWeapon = nameOfWeapon;
     try(Connection con = DB.sql2o.open()){
-      String sql = "UPDATE weapons SET name_of_weapon = :name_of_weapon WHERE id = :id";
+      String sql = "UPDATE weapons SET nameofweapon = :nameofweapon WHERE id = :id";
       con.createQuery(sql)
-      .addParameter("name_of_weapon", name_of_weapon)
+      .addParameter("nameofweapon", nameofweapon)
       .addParameter("id", id)
       .executeUpdate();
     }
@@ -105,27 +105,27 @@ public String getPersonId(){
 
   public void addPerson(Person person) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons_person (weapon_id, Person_id) VALUES (:weapon_id, :Person_id)";
+      String sql = "INSERT INTO weapons_person (weapon_id, person_id) VALUES (:weapon_id, :person_id)";
       con.createQuery(sql)
         .addParameter("weapon_id", id)
-        .addParameter("Person_id", Person.getId())
+        .addParameter("person_id", Person.getId())
         .executeUpdate();
     }
   }
 
-  public void removePerson(Person Person){
+  public void removePerson(Person person){
     try(Connection con = DB.sql2o.open()){
-      String sql = "DELETE FROM weapons_person WHERE weapon_id = :weapon_id AND Person_id = :Person_id";
+      String sql = "DELETE FROM weapons_person WHERE weapon_id = :weapon_id AND person_id = :person_id";
       con.createQuery(sql)
       .addParameter("weapon_id", id)
-      .addParameter("Person_id", Person.getId())
+      .addParameter("person_id", Person.getId())
       .executeUpdate();
     }
   }
 
   public List<Person> getPerson() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT person.* FROM weapons JOIN weapons_person ON (weapons.id = weapons_person.weapon_id) JOIN person ON (weapons_person.Person_id = person.id) WHERE weapons.id = :id";
+      String sql = "SELECT person.* FROM weapons JOIN weapons_person ON (weapon.id = weapons_person.weapon_id) JOIN person ON (weapons_person.Person_id = person.id) WHERE weapons.id = :id";
       List<Person> person = con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetch(Person.class);
@@ -136,7 +136,7 @@ public String getPersonId(){
   public static List<Weapon> search(String query) {
     try(Connection con = DB.sql2o.open()) {
       String searchQuery = "%"+query+"%";
-      String sql = "SELECT * FROM weapons WHERE name_of_weapon LIKE :searchQuery";
+      String sql = "SELECT * FROM weapons WHERE nameofweapon LIKE :searchQuery";
       List<Weapon> weapons = con.createQuery(sql)
         .addParameter("searchQuery", searchQuery)
         .executeAndFetch(Weapon.class);
