@@ -1,28 +1,35 @@
-<h1>Home Page</h1>
+<!-- <h1>Home Page</h1>
 <form action='/newpage' method=''>
   <div class='form-group'>
     <label></label>
     <input type="" name="" id="" class="form-control">
   </div>
-  <button type="submit" class='btn'>Submit!</button>
+  <button type="submit" class='btn'>Submit!</button> -->
 </form>
 <div class="game-border">
-
-
   <svg height="400" width="400">
-      <g>
-         <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" /></circle>
-         <text  x=$x-bad1 y=$y-bad1 font-family="Verdana" font-size="20" fill="red"> $bad1-text </text>
-     </g>
-     <g>
-       <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
-      <text  x=$x-bad2 y=$ybad2 font-family="Verdana" font-size="20" fill="red"> $bad2-text </text>
-    </g>
-     <g>
-        <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue"></circle>
-        <text  x=$x y=$y font-family="Verdana" font-size="20" fill="blue"> $good-guy-text </text>
-    </g>
-    <rect x="200" y="380" width="20" height="40"
-     style="fill:brown;stroke:black;stroke-width:5;opacity:0.5" />
+    <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue" />
+    <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" />
+    <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
+
+    <rect x="175" y="390" width="50" height="10"
+     style="fill:brown;stroke:black;stroke-width:5;" />
+    <rect x="100" y="0" width="40" height="20"
+        style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+    <rect x="200" y="0" width="40" height="20"
+       style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+    <rect x="300" y="0" width="40" height="20"
+          style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+
   </svg>
 </div>
+
+<div class="row">
+  <a class="button" href="/movement/left">Go left</a>
+  <a class="button" href="/movement/right">Go right</a>
+  <a class="button" href="/movement/up">Go up</a>
+  <a class="button" href="/movement/down">Go down</a>
+</div>
+<form action="/display-text" method="post">
+  <p>$player.getName(): $player-text</p>
+</form>
