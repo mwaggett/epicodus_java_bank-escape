@@ -113,6 +113,25 @@ public class Person {
     }
   }
 
+  public void melee(Person target) {
+    this.health -= randomGenerator.nextInt(6);
+    try(Connection con = DB.sql2o.open()) {
+      String attackerQuery = "UPDATE people SET health = :health WHERE id = :id";
+      con.createQuery(attackerQuery)
+        .addParameter("health", health)
+        .addParameter("id", id)
+        .executeUpdate();
+
+      String targetQuery = "UPDATE people SET health = :health WHERE id = :id";
+      con.createQuery(targetQuery)
+        .addParameter("health", target.getHealth() - randomGenerator.nextInt(11))
+        .addParameter("id", target.getId())
+        .executeUpdate();
+      // I'm worried about the fact that we're not updating the target instance
+      // and only the entry in the database. But maybe that doesn't matter.
+    }
+  }
+
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "DELETE FROM people WHERE id = :id";

@@ -104,6 +104,18 @@ public class PersonTest {
   }
 
   @Test
+  public void melee_affectsHealth(){
+    Person attacker = new Person("George");
+    attacker.save();
+    Person target = new Person("Frank");
+    target.save();
+    attacker.melee(target);
+    assertTrue(Person.find(attacker.getId()).getHealth() < 100);
+    assertTrue(Person.find(target.getId()).getHealth() < 100);
+    // Will fail if randomGenerator chooses 0.
+  }
+
+  @Test
   public void delete_deletesFromDatabase() {
     Person person = new Person("George");
     person.save();
