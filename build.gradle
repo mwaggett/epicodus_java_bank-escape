@@ -1,7 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-archivesBaseName = "app"
+
+archivesBaseName = "bank-escape"
 version = '1.0'
 mainClassName = "App"
 

@@ -1,0 +1,5 @@
+.game-border {
+  height: 400px;
+  width: 400px;
+  border: black 1px solid;
+}
