@@ -64,43 +64,43 @@ public class PersonTest {
   }
 
   @Test
-  public void moveLeft_updatesXCoordinateMinus1() {
+  public void moveLeft_updatesXCoordinateMinus10() {
     Person person = new Person("George");
     person.save();
     int originalX = person.getXCoordinate();
     person.moveLeft();
-    assertEquals(1, originalX - person.getXCoordinate());
-    assertEquals(1, originalX - Person.all().get(0).getXCoordinate());
+    assertEquals(10, originalX - person.getXCoordinate());
+    assertEquals(10, originalX - Person.all().get(0).getXCoordinate());
   }
 
   @Test
-  public void moveRight_updatesXCoordinatePlus1() {
+  public void moveRight_updatesXCoordinatePlus10() {
     Person person = new Person("George");
     person.save();
     int originalX = person.getXCoordinate();
     person.moveRight();
-    assertEquals(1, person.getXCoordinate() - originalX);
-    assertEquals(1, Person.all().get(0).getXCoordinate() - originalX);
+    assertEquals(10, person.getXCoordinate() - originalX);
+    assertEquals(10, Person.all().get(0).getXCoordinate() - originalX);
   }
 
   @Test
-  public void moveUp_updatesYCoordinateMinus1() {
+  public void moveUp_updatesYCoordinateMinus10() {
     Person person = new Person("George");
     person.save();
     int originalY = person.getYCoordinate();
     person.moveUp();
-    assertEquals(1, originalY - person.getYCoordinate());
-    assertEquals(1, originalY - Person.all().get(0).getYCoordinate());
+    assertEquals(10, originalY - person.getYCoordinate());
+    assertEquals(10, originalY - Person.all().get(0).getYCoordinate());
   }
 
   @Test
-  public void moveDown_updatesYCoordinatePlus1() {
+  public void moveDown_updatesYCoordinatePlus10() {
     Person person = new Person("George");
     person.save();
     int originalY = person.getYCoordinate();
     person.moveDown();
-    assertEquals(1, person.getYCoordinate() - originalY);
-    assertEquals(1, Person.all().get(0).getYCoordinate() - originalY);
+    assertEquals(10, person.getYCoordinate() - originalY);
+    assertEquals(10, Person.all().get(0).getYCoordinate() - originalY);
   }
 
   @Test

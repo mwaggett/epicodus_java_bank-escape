@@ -70,7 +70,7 @@ public class Person {
   }
 
   public void moveLeft() {
-    this.x_coordinate -= 1;
+    this.x_coordinate -= 10;
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET x_coordinate = :x WHERE id = :id";
       con.createQuery(sql)
@@ -81,7 +81,7 @@ public class Person {
   }
 
   public void moveRight() {
-    this.x_coordinate += 1;
+    this.x_coordinate += 10;
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET x_coordinate = :x WHERE id = :id";
       con.createQuery(sql)
@@ -92,7 +92,7 @@ public class Person {
   }
 
   public void moveUp() {
-    this.y_coordinate -= 1;
+    this.y_coordinate -= 10;
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET y_coordinate = :y WHERE id = :id";
       con.createQuery(sql)
@@ -103,7 +103,7 @@ public class Person {
   }
 
   public void moveDown() {
-    this.y_coordinate += 1;
+    this.y_coordinate += 10;
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET y_coordinate = :y WHERE id = :id";
       con.createQuery(sql)
