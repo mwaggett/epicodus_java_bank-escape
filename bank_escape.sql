@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: person; Type: TABLE; Schema: public; Owner: sandimckendrick; Tablespace: 
+-- Name: person; Type: TABLE; Schema: public; Owner: sandimckendrick; Tablespace:
 --
 
 CREATE TABLE person (
@@ -63,7 +63,7 @@ ALTER SEQUENCE person_id_seq OWNED BY person.id;
 
 
 --
--- Name: weapons; Type: TABLE; Schema: public; Owner: sandimckendrick; Tablespace: 
+-- Name: weapons; Type: TABLE; Schema: public; Owner: sandimckendrick; Tablespace:
 --
 
 CREATE TABLE weapons (
@@ -99,17 +99,17 @@ ALTER SEQUENCE weapons_id_seq OWNED BY weapons.id;
 
 
 --
--- Name: weapons_persons; Type: TABLE; Schema: public; Owner: sandimckendrick; Tablespace: 
+-- Name: weapons_persons; Type: TABLE; Schema: public; Owner: sandimckendrick; Tablespace:
 --
 
-CREATE TABLE weapons_persons (
+CREATE TABLE weapons_people (
     id integer NOT NULL,
     weapon_id integer,
-    person_id integer
+    people_id integer
 );
 
 
-ALTER TABLE weapons_persons OWNER TO sandimckendrick;
+ALTER TABLE weapons_people OWNER TO sandimckendrick;
 
 --
 -- Name: weapons_persons_id_seq; Type: SEQUENCE; Schema: public; Owner: sandimckendrick
@@ -199,7 +199,7 @@ SELECT pg_catalog.setval('weapons_persons_id_seq', 1, false);
 
 
 --
--- Name: person_pkey; Type: CONSTRAINT; Schema: public; Owner: sandimckendrick; Tablespace: 
+-- Name: person_pkey; Type: CONSTRAINT; Schema: public; Owner: sandimckendrick; Tablespace:
 --
 
 ALTER TABLE ONLY person
@@ -207,7 +207,7 @@ ALTER TABLE ONLY person
 
 
 --
--- Name: weapons_persons_pkey; Type: CONSTRAINT; Schema: public; Owner: sandimckendrick; Tablespace: 
+-- Name: weapons_persons_pkey; Type: CONSTRAINT; Schema: public; Owner: sandimckendrick; Tablespace:
 --
 
 ALTER TABLE ONLY weapons_persons
@@ -215,7 +215,7 @@ ALTER TABLE ONLY weapons_persons
 
 
 --
--- Name: weapons_pkey; Type: CONSTRAINT; Schema: public; Owner: sandimckendrick; Tablespace: 
+-- Name: weapons_pkey; Type: CONSTRAINT; Schema: public; Owner: sandimckendrick; Tablespace:
 --
 
 ALTER TABLE ONLY weapons
@@ -235,4 +235,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-
