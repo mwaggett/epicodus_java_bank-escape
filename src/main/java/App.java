@@ -17,20 +17,25 @@ public class App {
     String layout = "templates/layout.vtl";
 
     Person player = new Person("John");
+    Person bad1 = new Person("Bad Guy Mike");
+    Person bad2 = new Person("Bad Guy Jake");
     player.save();
 
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
 
+      npcMovement(player, bad1);
+      npcMovement(player, bad2);
+
       model.put("x", player.getXCoordinate());
       model.put("y", player.getYCoordinate());
 
-      model.put("x-bad1", 50);
-      model.put("y-bad1", 100);
+      model.put("x-bad1", bad1.getXCoordinate());
+      model.put("y-bad1", bad1.getYCoordinate());
 
-      model.put("x-bad2", 300);
-      model.put("y-bad2", 50);
+      model.put("x-bad2", bad2.getXCoordinate());
+      model.put("y-bad2", bad2.getYCoordinate());
 
       model.put("player", player);
       model.put("player-text", "Hello");
@@ -96,5 +101,44 @@ public class App {
       response.redirect("/" );
       return null;
     });
+  }
+
+  public static void npcMovement(Person player, Person person) {
+
+    Random randomGenerator = new Random();
+
+    int random = randomGenerator.nextInt(6);
+
+    if(random == 1 || random == 2 ) {
+      if(player.getXCoordinate() > person.getXCoordinate()) {
+        person.moveRight();
+      } else {
+        person.moveLeft();
+      }
+    } else if(random == 3 || random == 4) {
+      if(player.getYCoordinate() < person.getYCoordinate()) {
+        person.moveUp();
+      } else {
+        person.moveDown();
+      }
+    } else {
+      randomlyMove(person);
+    }
+  }
+
+
+  public static void randomlyMove(Person person) {
+    Random randomGenerator = new Random();
+
+    int random = randomGenerator.nextInt(5);
+    if(random == 1) {
+      person.moveUp();
+    } else if(random == 2) {
+      person.moveDown();
+    } else if(random == 3) {
+      person.moveLeft();
+    } else {
+      person.moveRight();
+    }
   }
 }
