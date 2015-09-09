@@ -116,6 +116,28 @@ public class PersonTest {
   }
 
   @Test
+  public void pickUp_getWeapons_personAcquiresWeapon() {
+    Person person = new Person("George");
+    person.save();
+    Weapon weapon = new Weapon("Knife", 20);
+    weapon.save();
+    person.pickUp(weapon);
+    assertTrue(person.getWeapons().contains(weapon));
+  }
+
+  @Test
+  public void use_affectsHealth(){
+    Person attacker = new Person("George");
+    attacker.save();
+    Weapon weapon = new Weapon("Knife", 20);
+    weapon.save();
+    Person target = new Person("Frank");
+    target.save();
+    attacker.use(weapon, target);
+    assertEquals(80, Person.find(target.getId()).getHealth());
+  }
+
+  @Test
   public void delete_deletesFromDatabase() {
     Person person = new Person("George");
     person.save();
