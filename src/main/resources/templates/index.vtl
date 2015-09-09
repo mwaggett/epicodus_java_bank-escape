@@ -1,22 +1,30 @@
-<h1>Home Page</h1>
+<!-- <h1>Home Page</h1>
 <form action='/newpage' method=''>
   <div class='form-group'>
     <label></label>
     <input type="" name="" id="" class="form-control">
   </div>
-  <button type="submit" class='btn'>Submit!</button>
+  <button type="submit" class='btn'>Submit!</button> -->
 </form>
 <div class="game-border">
   <svg height="400" width="400">
     <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue" />
     <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" />
     <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
-    <rect x="200" y="380" width="20" height="40"
+
+    <rect x="175" y="390" width="50" height="10"
      style="fill:brown;stroke:black;stroke-width:5;opacity:0.5" />
+    <rect x="100" y="0" width="40" height="20"
+        style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+    <rect x="200" y="0" width="40" height="20"
+       style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+    <rect x="300" y="0" width="40" height="20"
+          style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+
   </svg>
 </div>
 
-  <a href="/movement/left">Go left</a>
-  <a href="/movement/right">Go right</a>
-  <a href="/movement/up">Go up</a>
-  <a href="/movement/down">Go down</a>
+  <a class="button" href="/movement/left">Go left</a>
+  <a class="button" href="/movement/right">Go right</a>
+  <a class="button" href="/movement/up">Go up</a>
+  <a class="button" href="/movement/down">Go down</a>
