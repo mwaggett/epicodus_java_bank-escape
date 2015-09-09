@@ -1,7 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-archivesBaseName = "epicodus_java_bank-escape"
+
+archivesBaseName = "bank-escape"
 version = '1.0'
 mainClassName = "App"
 
