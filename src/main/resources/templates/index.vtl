@@ -10,9 +10,18 @@
 
 
   <svg height="400" width="400">
-    <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue" />
-    <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" />
-    <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
+      <g>
+         <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" /></circle>
+         <text  x=$x-bad1 y=$y-bad1 font-family="Verdana" font-size="20" fill="red"> $bad1-text </text>
+     </g>
+     <g>
+       <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
+      <text  x=$x-bad2 y=$ybad2 font-family="Verdana" font-size="20" fill="red"> $bad2-text </text>
+    </g>
+     <g>
+        <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue"></circle>
+        <text  x=$x y=$y font-family="Verdana" font-size="20" fill="blue"> $good-guy-text </text>
+    </g>
     <rect x="200" y="380" width="20" height="40"
      style="fill:brown;stroke:black;stroke-width:5;opacity:0.5" />
   </svg>

@@ -28,6 +28,9 @@ public class App {
 
       model.put("x-bad2", 300);
       model.put("y-bad2", 50);
+
+      model.put("bad1-text", "You won't get away");
+      model.put("good-guy-text", "Watch me!");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
