@@ -33,6 +33,8 @@ public class App {
       model.put("y-bad2", 50);
 
       model.put("player", player);
+      model.put("player-text", "Hello");
+
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
