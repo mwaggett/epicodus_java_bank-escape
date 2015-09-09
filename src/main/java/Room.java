@@ -2,6 +2,7 @@ import org.sql2o.*;
 import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.lang.Math;
 
 public class Room {
@@ -61,20 +62,39 @@ public class Room {
     return itemLocations;
   }
 
+  public void placeItem(int[] coords){
+    itemLocations.add(coords);
+  }
+
   public ArrayList<int[]> getNpcLocations(){
     return npcLocations;
   }
 
 
 
-  //method to check given coords - returns what?
-  // public Object checkCoords (int[] coords){
-  //
-  //   //check if u hit da wall
-  //   //check if u found da exit
-  //   //check for item
-  //   //check for npc
-  //
-  // }
+  //method to check given coords
+  public String checkCoords (int[] coords){
+
+    String checkResults = "";
+
+    for(int[] item : itemLocations){
+      if (Arrays.equals(coords,item)){
+        checkResults = "There is an item here!  ";
+      }
+    }
+
+    for(int[] npc : npcLocations){
+      if (Arrays.equals(coords,npc)){
+        checkResults = checkResults +"There is some guy standing here!";
+      }
+    }
+    //check if u hit da wall
+    if (coords[0] < 0 || coords[1] < 0){
+      checkResults = "Don't go there!";
+    }
+
+    return checkResults;
+
+  }
 
 }
