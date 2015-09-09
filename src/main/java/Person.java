@@ -4,11 +4,11 @@ import java.util.Random;
 
 public class Person {
 
-  private int id;
-  private String name;
-  private int x_coordinate;
-  private int y_coordinate;
-  private int health;
+  protected int id;
+  protected String name;
+  protected int x_coordinate;
+  protected int y_coordinate;
+  protected int health;
 
   private static Random randomGenerator = new Random();
 
