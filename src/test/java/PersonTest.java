@@ -132,8 +132,9 @@ public class PersonTest {
     person.save();
     Weapon weapon = new Weapon("Knife", 20);
     weapon.save();
-    person.pickUp(weapon);
-    assertTrue(person.getWeapons().contains(weapon));
+    Weapon savedWeapon = Weapon.find(weapon.getId());
+    person.pickUp(savedWeapon);
+    assertTrue(person.getWeapons().contains(savedWeapon));
   }
 
   @Test
