@@ -7,14 +7,18 @@ public class Weapon {
   private int damage;
   private String nameOfWeapon;
   private int numberOfUses;
-  private boolean broken;
+  //private boolean broken;
   private int person_id;
+  private int x_coordinate;
+  private int y_coordinate;
+
+
 
   public Weapon (String nameOfWeapon, int damage) {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
     this.numberOfUses = 3;
-    this.broken = false;
+    // this.broken = false;
     this.person_id = 0;
   }
 
@@ -38,6 +42,15 @@ public int getPersonId(){
   return person_id;
 }
 
+
+public int getXCoordinate() {
+  return x_coordinate;
+}
+
+public int getYCoordinate() {
+  return y_coordinate;
+}
+
   @Override
   public boolean equals(Object otherWeapon) {
     if (!(otherWeapon instanceof Weapon)) {
@@ -53,12 +66,10 @@ public int getPersonId(){
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons (nameofweapon, damage, numberofuses, broken, person_id) VALUES (:nameofweapon, :damage, :numberofuses, :broken, :person_id);";
+      String sql = "INSERT INTO weapons (nameofweapon, damage, person_id) VALUES (:nameofweapon, :damage, :person_id);";
       this.id = (int) con.createQuery(sql, true)
           .addParameter("nameofweapon", nameOfWeapon)
           .addParameter("damage", damage)
-          .addParameter("numberofuses", numberOfUses)
-          .addParameter("broken", broken)
           .addParameter("person_id", person_id)
           .executeUpdate()
           .getKey();
@@ -147,9 +158,9 @@ public int getPersonId(){
       return weapons;
     }
   }
-
-  public boolean isBroken(){
-  return broken;
-  }
+  //
+  // public boolean isBroken(){
+  // return broken;
+  // }
 
 }
