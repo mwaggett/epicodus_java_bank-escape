@@ -32,7 +32,8 @@ public class App {
       npcMovement(player, bad1);
       npcMovement(player, bad2);
 
-      String message = checkIfCloseToNPC(player, bad1, bad2);
+      boolean proximityBad1 = player.inRange(bad1);
+      boolean proximityBad2 = player.inRange(bad2);
 
       if(player.getHealth() <= 0) {
           response.redirect("/dead" );
@@ -51,7 +52,7 @@ public class App {
       model.put("bad1", bad1);
       model.put("bad2", bad2);
 
-      model.put("combat-status", message);
+      // model.put("combat-status", message);
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -116,7 +117,7 @@ public class App {
         person.moveDown();
       }
     } else {
-      randomlyMove(person);
+      person.moveRandom();
     }
   }
 

@@ -1,7 +1,7 @@
 import org.sql2o.*;
 import java.util.List;
 import java.util.Random;
-import java.util.Math;
+import java.lang.Math;
 
 public class Person {
 
@@ -144,13 +144,13 @@ public class Person {
   public void moveRandom() {
     int random = randomGenerator.nextInt(4);
     if(random == 1) {
-      person.moveUp();
+      this.moveUp();
     } else if(random == 2) {
-      person.moveDown();
+      this.moveDown();
     } else if(random == 3) {
-      person.moveLeft();
+      this.moveLeft();
     } else {
-      person.moveRight();
+      this.moveRight();
     }
   }
 
@@ -197,7 +197,7 @@ public class Person {
   }
 
   public boolean isDead() {
-    return (this.getHealth <= 0);
+    return (this.getHealth() <= 0);
   }
 
   public void delete() {
