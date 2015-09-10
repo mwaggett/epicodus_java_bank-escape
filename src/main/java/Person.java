@@ -171,13 +171,7 @@ public class Person {
   }
 
   public void pickUp(Weapon weapon) {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE weapons SET person_id = :id WHERE id = :weapon_id";
-      con.createQuery(sql)
-        .addParameter("id", id)
-        .addParameter("weapon_id", weapon.getId())
-        .executeUpdate();
-    }
+    weapon.addPerson(this);
   }
 
   public List<Weapon> getWeapons() {

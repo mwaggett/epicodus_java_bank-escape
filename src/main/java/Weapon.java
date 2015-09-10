@@ -2,23 +2,19 @@ import org.sql2o.*;
 import java.util.List;
 
 public class Weapon {
-  //private List<Weapon> weapons;
+
   private int id;
   private int damage;
   private String nameOfWeapon;
-  private int numberOfUses;
-  //private boolean broken;
   private int person_id;
   private int x_coordinate;
   private int y_coordinate;
-
+  // ^These are not in database (yet?). Not sure if they're necessary or not.
 
 
   public Weapon (String nameOfWeapon, int damage) {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
-    this.numberOfUses = 3;
-    // this.broken = false;
     this.person_id = 0;
   }
 
@@ -32,10 +28,6 @@ public class Weapon {
 
  public int getDamage(){
    return damage;
- }
-
- public int getNumberOfUses(){
-   return numberOfUses;
  }
 
 public int getPersonId(){
@@ -59,8 +51,7 @@ public int getYCoordinate() {
       Weapon newWeapon = (Weapon) otherWeapon;
       return    this.getId() == newWeapon.getId() &&
                 this.getNameOfWeapon().equals(newWeapon.getNameOfWeapon()) &&
-                this.getDamage() == newWeapon.getDamage() &&
-                this.getNumberOfUses() == newWeapon.getNumberOfUses();
+                this.getDamage() == newWeapon.getDamage();
     }
   }
 
@@ -119,32 +110,13 @@ public int getYCoordinate() {
   }
 
   public void addPerson(Person person) {
+    this.person_id = person.getId();
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons_person (weapon_id, person_id) VALUES (:weapon_id, :person_id)";
+      String sql = "UPDATE weapons SET person_id = :person_id WHERE id = :weapon_id";
       con.createQuery(sql)
-        .addParameter("weapon_id", id)
         .addParameter("person_id", person.getId())
+        .addParameter("weapon_id", id)
         .executeUpdate();
-    }
-  }
-
-  public void removePerson(Person person){
-    try(Connection con = DB.sql2o.open()){
-      String sql = "DELETE FROM weapons_person WHERE weapon_id = :weapon_id AND person_id = :person_id";
-      con.createQuery(sql)
-      .addParameter("weapon_id", id)
-      .addParameter("person_id", person.getId())
-      .executeUpdate();
-    }
-  }
-
-  public List<Person> getPerson() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT person.* FROM weapons JOIN weapons_person ON (weapon.id = weapons_person.weapon_id) JOIN person ON (weapons_person.Person_id = person.id) WHERE weapons.id = :id";
-      List<Person> person = con.createQuery(sql)
-        .addParameter("id", id)
-        .executeAndFetch(Person.class);
-      return person;
     }
   }
 
@@ -158,9 +130,5 @@ public int getYCoordinate() {
       return weapons;
     }
   }
-  //
-  // public boolean isBroken(){
-  // return broken;
-  // }
 
 }
