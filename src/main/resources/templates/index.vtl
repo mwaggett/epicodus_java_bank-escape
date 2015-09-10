@@ -3,8 +3,8 @@
     <div class="game-border">
       <svg height="400" width="400">
         <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue" />
-        <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" />
-        <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
+        <circle cx=$x-bad1 cy=$y-bad1 r=$bad1_radius stroke="black" stroke-width="1" fill="red" />
+        <circle cx=$x-bad2 cy=$y-bad2 r=$bad2_radius stroke="black" stroke-width="1" fill="red" />
 
         <rect x="175" y="390" width="50" height="10"
          style="fill:brown;stroke:black;stroke-width:5;" />
@@ -51,8 +51,20 @@
         <tbody>
           <tr>
             <td>$player.getHealth()</td>
-            <td>$bad1.getHealth()</td>
-            <td> $bad2.getHealth()</td>
+            <td>
+              #if ($bad1.getHealth() > 0)
+                $bad1.getHealth()
+              #else
+                <p>DEAD</p>
+              #end
+            </td>
+            <td>
+              #if ($bad2.getHealth() > 0)
+                $bad2.getHealth()
+              #else
+                <p>DEAD</p>
+              #end
+            </td>
           </tr>
 
         </tbody>
