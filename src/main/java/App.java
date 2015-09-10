@@ -29,13 +29,14 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
 
+      String message;
+
       int bad1_radius = 5;
       int bad2_radius = 5;
 
       npcMovement(player, bad1);
       npcMovement(player, bad2);
 
-      String message = "You are not in combat";
 
       //If a player is close to an NPC it either has the NPC perform
       //A melee attack, or if both are close by it will choose a random NPC
@@ -50,20 +51,14 @@ public class App {
       if(bad1.getHealth() <= 0) {
         message = bad1.getName() + " is dead!";
         bad1_radius = 0;
+        bad1.delete();
       } else if(bad2.getHealth() <= 0) {
         message = bad2.getName() + " is dead!";
         bad2_radius = 0;
+        bad2.delete();
       } else {
-        message = "You are not in combat";
+      //  message = "You are not in combat";
       }
-      model.put("x", player.getXCoordinate());
-      model.put("y", player.getYCoordinate());
-
-      model.put("x-bad1", bad1.getXCoordinate());
-      model.put("y-bad1", bad1.getYCoordinate());
-
-      model.put("x-bad2", bad2.getXCoordinate());
-      model.put("y-bad2", bad2.getYCoordinate());
 
       model.put("player", player);
       model.put("bad1", bad1);
@@ -189,6 +184,4 @@ public class App {
     }
     return message;
   }
-
-
 }

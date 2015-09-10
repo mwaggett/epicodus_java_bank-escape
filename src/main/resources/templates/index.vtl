@@ -2,9 +2,9 @@
   <div class="col-md-6">
     <div class="game-border">
       <svg height="400" width="400">
-        <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue" />
-        <circle cx=$x-bad1 cy=$y-bad1 r=$bad1_radius stroke="black" stroke-width="1" fill="red" />
-        <circle cx=$x-bad2 cy=$y-bad2 r=$bad2_radius stroke="black" stroke-width="1" fill="red" />
+        <circle cx=$player.getXCoordinate() cy=$player.getYCoordinate() r="5" stroke="black" stroke-width="1" fill="blue" />
+        <circle cx=$bad1.getXCoordinate() cy=$bad1.getYCoordinate() r=$bad1_radius stroke="black" stroke-width="1" fill="red" />
+        <circle cx=$bad2.getXCoordinate() cy=$bad2.getYCoordinate() r=$bad2_radius stroke="black" stroke-width="1" fill="red" />
 
         <rect x="175" y="390" width="50" height="10"
          style="fill:brown;stroke:black;stroke-width:5;" />
