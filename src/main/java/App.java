@@ -8,6 +8,7 @@ import static spark.Spark.*;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import java.util.Map;
+import java.lang.Math.*;
 
 public class App {
 
@@ -18,7 +19,9 @@ public class App {
 
     Person player = new Person("John");
     Person bad1 = new Person("Bad Guy Mike");
+    bad1.save();
     Person bad2 = new Person("Bad Guy Jake");
+    bad2.save();
     player.save();
 
     get("/", (request, response) -> {
@@ -28,6 +31,7 @@ public class App {
       npcMovement(player, bad1);
       npcMovement(player, bad2);
 
+      String message = checkIfCloseToNPC(player, bad1, bad2);
       model.put("x", player.getXCoordinate());
       model.put("y", player.getYCoordinate());
 
@@ -38,7 +42,7 @@ public class App {
       model.put("y-bad2", bad2.getYCoordinate());
 
       model.put("player", player);
-      model.put("player-text", "Hello");
+      model.put("player-text", message);
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -126,7 +130,6 @@ public class App {
     }
   }
 
-
   public static void randomlyMove(Person person) {
     Random randomGenerator = new Random();
 
@@ -140,5 +143,19 @@ public class App {
     } else {
       person.moveRight();
     }
+  }
+  public static String checkIfCloseToNPC(Person player, Person bad1, Person bad2) {
+    String message = "Did not get hit";
+    if(Math.abs(player.getXCoordinate() - bad1.getXCoordinate()) <= 20 ||
+      (Math.abs(player.getYCoordinate() - bad1.getYCoordinate())) <= 20) {
+      bad1.melee(player);
+      message = "You got hit by " + bad1.getName() + "!";
+    }
+    if(Math.abs(player.getXCoordinate() - bad2.getXCoordinate()) <= 20 ||
+      (Math.abs(player.getYCoordinate() - bad2.getYCoordinate())) <= 20) {
+      bad2.melee(player);
+      message = "You got hit by " + bad2.getName() + "!";
+    }
+    return message;
   }
 }
