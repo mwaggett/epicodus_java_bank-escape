@@ -56,8 +56,10 @@ public class App {
         message = bad2.getName() + " is dead!";
         bad2_radius = 0;
         bad2.delete();
-      } else {
-      //  message = "You are not in combat";
+      }
+      if (player.escaped() == true) {
+        response.redirect("/success" );
+        return null;
       }
 
       model.put("player", player);
@@ -130,6 +132,13 @@ public class App {
     get("/dead", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/dead.vtl");
+
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/success", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/success.vtl");
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
