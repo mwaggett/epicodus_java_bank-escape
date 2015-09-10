@@ -36,6 +36,15 @@ public class PersonTest {
   }
 
   @Test
+  public void setHealth_changesHealth() {
+    Person person = new Person("George");
+    person.save();
+    person.setHealth(person.getHealth() - 20);
+    assertEquals(80, person.getHealth());
+    assertEquals(80, Person.all().get(0).getHealth());
+  }
+
+  @Test
   public void getId_returnsIdAfterSave() {
     Person person = new Person("George");
     person.save();
@@ -102,6 +111,8 @@ public class PersonTest {
     assertEquals(10, person.getYCoordinate() - originalY);
     assertEquals(10, Person.all().get(0).getYCoordinate() - originalY);
   }
+
+  // Movement tests will fail when person spawns too close to a wall.
 
   @Test
   public void melee_affectsHealth(){
