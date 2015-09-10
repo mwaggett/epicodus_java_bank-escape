@@ -66,12 +66,10 @@ public int getYCoordinate() {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons (nameofweapon, damage, numberofuses, broken, person_id) VALUES (:nameofweapon, :damage, :numberofuses, :broken, :person_id);";
+      String sql = "INSERT INTO weapons (nameofweapon, damage, person_id) VALUES (:nameofweapon, :damage, :person_id);";
       this.id = (int) con.createQuery(sql, true)
           .addParameter("nameofweapon", nameOfWeapon)
           .addParameter("damage", damage)
-          .addParameter("numberofuses", numberOfUses)
-          // .addParameter("broken", broken)
           .addParameter("person_id", person_id)
           .executeUpdate()
           .getKey();

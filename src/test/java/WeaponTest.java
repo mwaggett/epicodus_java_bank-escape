@@ -26,7 +26,7 @@ public class WeaponTest {
   @Test
   public void getDamage_returnsDamage() {
     Weapon newWeapon = new Weapon("Knife", 20);
-    assertEquals(100, newWeapon.getDamage());
+    assertEquals(20, newWeapon.getDamage());
   }
 
   @Test
@@ -54,7 +54,7 @@ public class WeaponTest {
   public void save_addsToDatabase() {
     Weapon newWeapon = new Weapon("Knife", 20);
     newWeapon.save();
-    assertEquals(Weapon.all().get(0), newWeapon);
+    assertEquals(Weapon.all().get(0).getNameOfWeapon(), newWeapon.getNameOfWeapon());
   }
 
 
