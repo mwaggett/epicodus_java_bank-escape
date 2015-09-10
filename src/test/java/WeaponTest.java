@@ -57,6 +57,13 @@ public class WeaponTest {
     assertEquals(Weapon.all().get(0).getNameOfWeapon(), newWeapon.getNameOfWeapon());
   }
 
+  @Test
+  public void instantiatesWithRandomCoords() {
+    Weapon newWeapon = new Weapon("Knife", 20);
+
+    assertTrue(newWeapon.getXCoordinate() != 500);
+  }
+
 
 
 }

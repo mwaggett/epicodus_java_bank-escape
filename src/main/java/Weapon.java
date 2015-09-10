@@ -1,5 +1,7 @@
 import org.sql2o.*;
 import java.util.List;
+import java.lang.Math;
+import java.util.Random;
 
 public class Weapon {
 
@@ -16,6 +18,9 @@ public class Weapon {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
     this.person_id = 0;
+    Random coords = new Random();
+    this.x_coordinate = coords.nextInt(400);
+    this.y_coordinate = coords.nextInt(400);
   }
 
   public int getId() {
