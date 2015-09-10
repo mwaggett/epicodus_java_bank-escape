@@ -12,7 +12,7 @@ public class Player extends Person {
   }
 
   public boolean escaped() {
-    return (x_coordinate >= 175 && x_coordinate <= 225 && y_coordinate <= 390);
+    return (x_coordinate >= 175 && x_coordinate <= 225 && y_coordinate >= 390);
   }
 
 }
