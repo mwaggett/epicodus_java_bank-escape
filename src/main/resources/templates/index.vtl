@@ -14,7 +14,7 @@
            style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
         <rect x="300" y="0" width="40" height="20"
               style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
-
+        <line x1=$weapon_x1 y1=$weapon_y1 x2=$weapon_x2  y2=$weapon_y2 style="stroke:silver;stroke-width:2" />
       </svg>
     </div>
   </div>
@@ -40,16 +40,22 @@
       <form action="/movement/attack">
         <button class="button btn-sm btn-primary attack" type="submit">Attack!</button>
       </form>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-body">
+        <h3>$combat-status</h3>
+        </div>
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
             <th>Health</th>
             <th>$bad1.getName()</th>
-            <th> $bad2.getName()</th>
+            <th>$bad2.getName()</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <h3><tr>
             <td>$player.getHealth()</td>
             <td>
               #if ($bad1.getHealth() > 0)
@@ -65,14 +71,9 @@
                 <p>DEAD</p>
               #end
             </td>
-          </tr>
+          </tr></h3>
 
         </tbody>
       </table>
-      <div class="panel panel-default">
-        <div class="panel-body">
-        <h3>$combat-status</h3>
-        </div>
-      </div>
   </div>
 </div>
