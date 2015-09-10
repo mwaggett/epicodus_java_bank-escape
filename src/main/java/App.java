@@ -27,6 +27,7 @@ public class App {
     bad2.save();
     weapon.save();
 
+
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
