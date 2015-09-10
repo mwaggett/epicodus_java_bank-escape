@@ -133,6 +133,7 @@ public class PersonTest {
     weapon.save();
     Person target = new Person("Frank");
     target.save();
+    attacker.pickUp(weapon);
     attacker.use(weapon, target);
     assertEquals(80, Person.find(target.getId()).getHealth());
   }

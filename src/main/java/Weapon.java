@@ -7,15 +7,15 @@ public class Weapon {
   private int damage;
   private String nameOfWeapon;
   private int numberOfUses;
-  //private boolean broken;
-  private String personId;
+  private boolean broken;
+  private int person_id;
 
   public Weapon (String nameOfWeapon, int damage) {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
     this.numberOfUses = 3;
-    //this.broken = false;
-    this.personId = personId;
+    this.broken = false;
+    this.person_id = 0;
   }
 
   public int getId() {
@@ -34,8 +34,8 @@ public class Weapon {
    return numberOfUses;
  }
 
-public String getPersonId(){
-  return personId;
+public int getPersonId(){
+  return person_id;
 }
 
   @Override
@@ -43,7 +43,7 @@ public String getPersonId(){
     if (!(otherWeapon instanceof Weapon)) {
       return false;
     } else {
-      Class newWeapon = (Class) otherWeapon;
+      Weapon newWeapon = (Weapon) otherWeapon;
       return    this.getId() == newWeapon.getId() &&
                 this.getNameOfWeapon().equals(newWeapon.getNameOfWeapon()) &&
                 this.getDamage() == newWeapon.getDamage() &&
@@ -53,9 +53,13 @@ public String getPersonId(){
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons (nameofweapon) VALUES (:nameofweapon);";
+      String sql = "INSERT INTO weapons (nameofweapon, damage, numberofuses, broken, person_id) VALUES (:nameofweapon, :damage, :numberofuses, :broken, :person_id);";
       this.id = (int) con.createQuery(sql, true)
-          .addParameter("nameofweapon", nameofweapon)
+          .addParameter("nameofweapon", nameOfWeapon)
+          .addParameter("damage", damage)
+          .addParameter("numberofuses", numberOfUses)
+          .addParameter("broken", broken)
+          .addParameter("person_id", person_id)
           .executeUpdate()
           .getKey();
     }
@@ -66,7 +70,7 @@ public String getPersonId(){
     try(Connection con = DB.sql2o.open()){
       String sql = "UPDATE weapons SET nameofweapon = :nameofweapon WHERE id = :id";
       con.createQuery(sql)
-      .addParameter("nameofweapon", nameofweapon)
+      .addParameter("nameofweapon", nameOfWeapon)
       .addParameter("id", id)
       .executeUpdate();
     }
@@ -108,7 +112,7 @@ public String getPersonId(){
       String sql = "INSERT INTO weapons_person (weapon_id, person_id) VALUES (:weapon_id, :person_id)";
       con.createQuery(sql)
         .addParameter("weapon_id", id)
-        .addParameter("person_id", Person.getId())
+        .addParameter("person_id", person.getId())
         .executeUpdate();
     }
   }
@@ -118,7 +122,7 @@ public String getPersonId(){
       String sql = "DELETE FROM weapons_person WHERE weapon_id = :weapon_id AND person_id = :person_id";
       con.createQuery(sql)
       .addParameter("weapon_id", id)
-      .addParameter("person_id", Person.getId())
+      .addParameter("person_id", person.getId())
       .executeUpdate();
     }
   }

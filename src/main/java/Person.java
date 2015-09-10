@@ -145,16 +145,21 @@ public class Person {
   public List<Weapon> getWeapons() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM weapons WHERE person_id = :id";
-      return con.createQuery(sql).executeAndFetch(Weapon.class);
+      return con.createQuery(sql)
+          .addParameter("id", id)
+          .executeAndFetch(Weapon.class);
     }
   }
 
   public void use(Weapon weapon, Person target) {
-    String sql = "UPDATE people SET health = :decreased_health WHERE id = :target_id";
-    con.createQuery(sql)
-      .addParameter("decreased_health", target.getHealth() - weapon.damage());
-      .addParameter("id", target.getId())
-      .executeUpdate();
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE people SET health = :decreased_health WHERE id = :target_id";
+      con.createQuery(sql)
+        .addParameter("decreased_health", target.getHealth() - weapon.getDamage())
+        .addParameter("target_id", target.getId())
+        .executeUpdate();
+    }
+    // Not yet checking whether person even has the weapon.
     // Maybe eventually will take into account how close attacker and target are.
     // Also same worry as in melee method.
   }
