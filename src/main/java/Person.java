@@ -58,11 +58,8 @@ public class Person {
     } else {
       Person newPersonInstance = (Person) otherPersonInstance;
       return this.getName().equals(newPersonInstance.getName()) &&
-             // this.getXCoordinate() == newPersonInstance.getXCoordinate() &&
-             // this.getYCoordinate() == newPersonInstance.getYCoordinate() &&
-             // ^Since locations are randomly generated, these won't be equal.
-             // Do we just want people with the same name to be equal? idk.
-             // Or should we include these anyway and it's just hard to test?
+             this.getXCoordinate() == newPersonInstance.getXCoordinate() &&
+             this.getYCoordinate() == newPersonInstance.getYCoordinate() &&
              this.getHealth() == newPersonInstance.getHealth() &&
              this.getId() == newPersonInstance.getId();
     }
@@ -157,6 +154,14 @@ public class Person {
   public boolean inRange(Person opponent) {
     if(Math.abs(x_coordinate - opponent.getXCoordinate()) <= 20 &&
       (Math.abs(y_coordinate - opponent.getYCoordinate())) <= 20) {
+        return true;
+    }
+    return false;
+  }
+
+  public boolean weaponInRange(Weapon weapon) {
+    if(Math.abs(x_coordinate - weapon.getXCoordinate()) <= 10 &&
+      (Math.abs(y_coordinate - weapon.getYCoordinate())) <= 10) {
         return true;
     }
     return false;

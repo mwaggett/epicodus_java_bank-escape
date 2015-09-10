@@ -11,16 +11,14 @@ public class Weapon {
   private int person_id;
   private int x_coordinate;
   private int y_coordinate;
-  // ^These are not in database (yet?). Not sure if they're necessary or not.
-
 
   public Weapon (String nameOfWeapon, int damage) {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
     this.person_id = 0;
     Random coords = new Random();
-    this.x_coordinate = coords.nextInt(400);
-    this.y_coordinate = coords.nextInt(400);
+    this.x_coordinate = coords.nextInt(401);
+    this.y_coordinate = coords.nextInt(401);
   }
 
   public int getId() {
@@ -56,7 +54,10 @@ public int getYCoordinate() {
       Weapon newWeapon = (Weapon) otherWeapon;
       return    this.getId() == newWeapon.getId() &&
                 this.getNameOfWeapon().equals(newWeapon.getNameOfWeapon()) &&
-                this.getDamage() == newWeapon.getDamage();
+                this.getDamage() == newWeapon.getDamage() &&
+                this.getPersonId() == newWeapon.getPersonId() &&
+                this.getXCoordinate() == newWeapon.getXCoordinate() &&
+                this.getYCoordinate() == newWeapon.getYCoordinate();
     }
   }
 

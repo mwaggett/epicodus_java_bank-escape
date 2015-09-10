@@ -52,10 +52,10 @@ public class PersonTest {
   }
 
   @Test
-  public void equals_returnsTrueWhenParamsMatch() {
+  public void equals_returnsFalseSinceLocationIsRandom() {
     Person firstPerson = new Person("George");
     Person secondPerson = new Person("George");
-    assertEquals(true, firstPerson.equals(secondPerson));
+    assertEquals(false, firstPerson.equals(secondPerson));
   }
 
   @Test
