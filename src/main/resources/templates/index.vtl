@@ -1,34 +1,57 @@
-<!-- <h1>Home Page</h1>
-<form action='/newpage' method=''>
-  <div class='form-group'>
-    <label></label>
-    <input type="" name="" id="" class="form-control">
-  </div>
-  <button type="submit" class='btn'>Submit!</button> -->
-</form>
-<div class="game-border">
-  <svg height="400" width="400">
-    <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue" />
-    <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" />
-    <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
-
-    <rect x="175" y="390" width="50" height="10"
-     style="fill:brown;stroke:black;stroke-width:5;" />
-    <rect x="100" y="0" width="40" height="20"
-        style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
-    <rect x="200" y="0" width="40" height="20"
-       style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
-    <rect x="300" y="0" width="40" height="20"
-          style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
-
-  </svg>
-</div>
-
 <div class="row">
-  <a class="button" href="/movement/left">Go left</a>
-  <a class="button" href="/movement/right">Go right</a>
-  <a class="button" href="/movement/up">Go up</a>
-  <a class="button" href="/movement/down">Go down</a>
+  <div class="col-md-6">
+    <div class="game-border">
+      <svg height="400" width="400">
+        <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue" />
+        <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" />
+        <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
+
+        <rect x="175" y="390" width="50" height="10"
+         style="fill:brown;stroke:black;stroke-width:5;" />
+        <rect x="100" y="0" width="40" height="20"
+            style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+        <rect x="200" y="0" width="40" height="20"
+           style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+        <rect x="300" y="0" width="40" height="20"
+              style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+
+      </svg>
+    </div>
+  </div>
+  <div class="col-md-6">
+      <form action="/movement/up">
+        <button class="button btn-sm btn-danger" type="submit">Go up</button>
+      </form>
+      <div class="display-inline">
+        <form action="/movement/left">
+          <button class="button btn-sm btn-danger" type="submit">Go left</button>
+        </form>
+        <form action="/movement/right">
+          <button class="button btn-sm btn-danger" type="submit">Go right</button>
+        </form>
+      </div>
+      <form action="/movement/down">
+        <button class="button btn-sm btn-danger" type="submit">Go down</button>
+      </form>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Health</th>
+            <th>Weapon uses</th>
+            <th>$bad1.getName()</th>
+            <th> $bad2.getName()</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>$player.getHealth()</td>
+            <td>$weapon.getNumberOfUses</td>
+            <td>$bad1.getHealth()</td>
+            <td> $bad2.getHealth()</td>
+          </tr>
+
+        </tbody>
+      </table>
+    <h3>$combat-status</h3>
+  </div>
 </div>
-<p>$player-text</p>
-<p>Health: $player.getHealth();

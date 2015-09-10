@@ -7,6 +7,26 @@ public class PlayerTest {
   public DatabaseRule database = new DatabaseRule();
 
   @Test
+  public void escaped_saysIfPlayerIsNearDoor_false() {
+    Player player = new Player("George");
+    player.save();
+    assertEquals(false, player.escaped());
+  }
+
+  @Test
+  public void escaped_saysIfPlayerIsNearDoor_true() {
+    Player player = new Player("George");
+    player.save();
+    while (player.getXCoordinate() < 175) {
+      player.moveRight();
+    }
+    while (player.getYCoordinate() < 390) {
+      player.moveDown();
+    }
+    assertEquals(true, player.escaped());
+  }
+
+  @Test
   public void all_emptyAtFirst() {
     assertEquals(0, Player.all().size());
   }
@@ -64,13 +84,13 @@ public class PlayerTest {
   }
 
   @Test
-  public void moveLeft_updatesXCoordinateMinus10() {
+  public void moveLeft_keepsPlayerInBounds() {
     Player player = new Player("George");
     player.save();
     int originalX = player.getXCoordinate();
     player.moveLeft();
-    assertEquals(10, originalX - player.getXCoordinate());
-    assertEquals(10, originalX - Player.all().get(0).getXCoordinate());
+    assertEquals(0, player.getXCoordinate());
+    assertEquals(0, Player.all().get(0).getXCoordinate());
   }
 
   @Test
@@ -84,13 +104,13 @@ public class PlayerTest {
   }
 
   @Test
-  public void moveUp_updatesYCoordinateMinus10() {
+  public void moveUp_keepsPlayerInBounds() {
     Player player = new Player("George");
     player.save();
     int originalY = player.getYCoordinate();
     player.moveUp();
-    assertEquals(10, originalY - player.getYCoordinate());
-    assertEquals(10, originalY - Player.all().get(0).getYCoordinate());
+    assertEquals(0, player.getYCoordinate());
+    assertEquals(0, Player.all().get(0).getYCoordinate());
   }
 
   @Test
