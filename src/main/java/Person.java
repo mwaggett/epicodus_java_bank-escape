@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import java.util.List;
 import java.util.Random;
+import java.util.Math;
 
 public class Person {
 
@@ -140,6 +141,27 @@ public class Person {
     }
   }
 
+  public void moveRandom() {
+    int random = randomGenerator.nextInt(4);
+    if(random == 1) {
+      person.moveUp();
+    } else if(random == 2) {
+      person.moveDown();
+    } else if(random == 3) {
+      person.moveLeft();
+    } else {
+      person.moveRight();
+    }
+  }
+
+  public boolean inRange(Person opponent) {
+    if(Math.abs(x_coordinate - opponent.getXCoordinate()) <= 20 &&
+      (Math.abs(y_coordinate - opponent.getYCoordinate())) <= 20) {
+        return true;
+    }
+    return false;
+  }
+
   public void melee(Person target) {
     int attackerNewHealth = this.getHealth() - randomGenerator.nextInt(6);
     int targetNewHealth = target.getHealth() - randomGenerator.nextInt(11);
@@ -172,6 +194,10 @@ public class Person {
     target.setHealth(targetNewHealth);
     // Not yet checking whether person even has the weapon.
     // Maybe eventually will take into account how close attacker and target are.
+  }
+
+  public boolean isDead() {
+    return (this.getHealth <= 0);
   }
 
   public void delete() {

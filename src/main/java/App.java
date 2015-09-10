@@ -86,7 +86,7 @@ public class App {
     });
   }
 
-  public static void npcMovement(Person player, Person person) {
+  public static void npcMovement(Player player, Person person) {
 
     Random randomGenerator = new Random();
 
@@ -109,32 +109,10 @@ public class App {
     }
   }
 
-  public static void randomlyMove(Person person) {
-    Random randomGenerator = new Random();
+  public static void npcAttack(Player player, Person npc) {
+    if (npc.inRange(player)) {
+      npc.melee(player);
+    }
+  }
 
-    int random = randomGenerator.nextInt(5);
-    if(random == 1) {
-      person.moveUp();
-    } else if(random == 2) {
-      person.moveDown();
-    } else if(random == 3) {
-      person.moveLeft();
-    } else {
-      person.moveRight();
-    }
-  }
-  public static String checkIfCloseToNPC(Person player, Person bad1, Person bad2) {
-    String message = "Did not get hit";
-    if(Math.abs(player.getXCoordinate() - bad1.getXCoordinate()) <= 20 &&
-      (Math.abs(player.getYCoordinate() - bad1.getYCoordinate())) <= 20) {
-      bad1.melee(player);
-      message = "You got hit by " + bad1.getName() + "!";
-    }
-    if(Math.abs(player.getXCoordinate() - bad2.getXCoordinate()) <= 20 &&
-      (Math.abs(player.getYCoordinate() - bad2.getYCoordinate())) <= 20) {
-      bad2.melee(player);
-      message = "You got hit by " + bad2.getName() + "!";
-    }
-    return message;
-  }
 }
