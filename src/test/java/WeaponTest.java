@@ -37,10 +37,10 @@ public class WeaponTest {
   }
 
   @Test
-  public void equals_returnsTrueWhenParamsMatch() {
+  public void equals_returnsFalseSinceLocationIsRandom() {
     Weapon firstWeapon = new Weapon("Knife", 20);
     Weapon secondWeapon = new Weapon("Knife", 20);
-    assertEquals(true, firstWeapon.equals(secondWeapon));
+    assertEquals(false, firstWeapon.equals(secondWeapon));
   }
 
   @Test
