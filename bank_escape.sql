@@ -66,40 +66,6 @@ ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
--- Name: weapon_locations; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
---
-
-CREATE TABLE weapon_locations (
-    id integer NOT NULL,
-    weapon_id integer,
-    person_id integer
-);
-
-
-ALTER TABLE weapon_locations OWNER TO "Guest";
-
---
--- Name: weapon_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
---
-
-CREATE SEQUENCE weapon_locations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE weapon_locations_id_seq OWNER TO "Guest";
-
---
--- Name: weapon_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
---
-
-ALTER SEQUENCE weapon_locations_id_seq OWNED BY weapon_locations.id;
-
-
---
 -- Name: weapons; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
@@ -107,7 +73,9 @@ CREATE TABLE weapons (
     id integer NOT NULL,
     nameofweapon character varying,
     damage integer,
-    person_id integer
+    person_id integer,
+    x_coordinate integer,
+    y_coordinate integer
 );
 
 
@@ -145,13 +113,6 @@ ALTER TABLE ONLY people ALTER COLUMN id SET DEFAULT nextval('people_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
-ALTER TABLE ONLY weapon_locations ALTER COLUMN id SET DEFAULT nextval('weapon_locations_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
---
-
 ALTER TABLE ONLY weapons ALTER COLUMN id SET DEFAULT nextval('weapons_id_seq'::regclass);
 
 
@@ -174,25 +135,10 @@ SELECT pg_catalog.setval('people_id_seq', 3, true);
 
 
 --
--- Data for Name: weapon_locations; Type: TABLE DATA; Schema: public; Owner: Guest
---
-
-COPY weapon_locations (id, weapon_id, person_id) FROM stdin;
-\.
-
-
---
--- Name: weapon_locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
---
-
-SELECT pg_catalog.setval('weapon_locations_id_seq', 1, false);
-
-
---
 -- Data for Name: weapons; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY weapons (id, nameofweapon, damage, person_id) FROM stdin;
+COPY weapons (id, nameofweapon, damage, person_id, x_coordinate, y_coordinate) FROM stdin;
 \.
 
 
@@ -209,14 +155,6 @@ SELECT pg_catalog.setval('weapons_id_seq', 1, false);
 
 ALTER TABLE ONLY people
     ADD CONSTRAINT people_pkey PRIMARY KEY (id);
-
-
---
--- Name: weapon_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
---
-
-ALTER TABLE ONLY weapon_locations
-    ADD CONSTRAINT weapon_locations_pkey PRIMARY KEY (id);
 
 
 --

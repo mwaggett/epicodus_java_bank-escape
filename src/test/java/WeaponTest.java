@@ -64,6 +64,22 @@ public class WeaponTest {
     assertTrue(newWeapon.getXCoordinate() != 500);
   }
 
+  @Test
+  public void coordsMatchWhenCalledFromDatabase() {
+    Weapon newWeapon = new Weapon("Knife", 20);
+    newWeapon.save();
+    Weapon testWeapon = Weapon.all().get(0);
+    assertEquals(newWeapon.getXCoordinate(), testWeapon.getXCoordinate());
+  }
+
+  @Test
+  public void coordsMatchWhenUsingFind() {
+    Weapon newWeapon = new Weapon("Knife", 20);
+    newWeapon.save();
+    int id = newWeapon.getId();
+    Weapon testWeapon = Weapon.find(id);
+    assertEquals(newWeapon.getXCoordinate(), testWeapon.getXCoordinate());
+  }
 
 
 }
