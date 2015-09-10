@@ -19,8 +19,9 @@ public class App {
 
     Person player = new Person("John");
     Person bad1 = new Person("Bad Guy Mike");
-    bad1.save();
     Person bad2 = new Person("Bad Guy Jake");
+
+    bad1.save();
     bad2.save();
     player.save();
 
@@ -42,36 +43,14 @@ public class App {
       model.put("y-bad2", bad2.getYCoordinate());
 
       model.put("player", player);
-      model.put("player-text", message);
+      model.put("bad1", bad1);
+      model.put("bad2", bad2);
+
+      model.put("combat-status", message);
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/movement", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/index.vtl");
-      String left = request.queryParams("left");
-      String right = request.queryParams("right");
-      String up = request.queryParams("up");
-      String down = request.queryParams("down");
-
-      // Person player = Person.find(Integer.parseInt(request.params("id")));
-
-      if(!(left.equals(null)) && left.length()!= 0) {
-        player.moveLeft();
-      }
-      if(!(right.equals(null)) && right.length()!= 0) {
-        player.moveRight();
-      }
-      if(!(up.equals(null)) && up.length()!= 0) {
-        player.moveUp();
-      }
-      if(!(down.equals(null)) && down.length()!= 0) {
-        player.moveDown();
-      }
-      response.redirect("/" );
-      return null;
-    });
 
     get("/movement/left", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -146,12 +125,12 @@ public class App {
   }
   public static String checkIfCloseToNPC(Person player, Person bad1, Person bad2) {
     String message = "Did not get hit";
-    if(Math.abs(player.getXCoordinate() - bad1.getXCoordinate()) <= 20 ||
+    if(Math.abs(player.getXCoordinate() - bad1.getXCoordinate()) <= 20 &&
       (Math.abs(player.getYCoordinate() - bad1.getYCoordinate())) <= 20) {
       bad1.melee(player);
       message = "You got hit by " + bad1.getName() + "!";
     }
-    if(Math.abs(player.getXCoordinate() - bad2.getXCoordinate()) <= 20 ||
+    if(Math.abs(player.getXCoordinate() - bad2.getXCoordinate()) <= 20 &&
       (Math.abs(player.getYCoordinate() - bad2.getYCoordinate())) <= 20) {
       bad2.melee(player);
       message = "You got hit by " + bad2.getName() + "!";

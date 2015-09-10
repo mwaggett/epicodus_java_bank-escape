@@ -3,3 +3,17 @@
   width: 400px;
   border: black 1px solid;
 }
+.right {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+.left {
+  margin-top:100px;
+
+}
+.down {
+  margin-top: 100px;
+}
+.display-inline .button {
+  display: inline-block;
+}
