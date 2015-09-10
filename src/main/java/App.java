@@ -17,7 +17,7 @@ public class App {
     staticFileLocation("/public"); // Relative path for images, css, etc.
     String layout = "templates/layout.vtl";
 
-    Person player = new Person("John");
+    Player player = new Player("John");
     Person bad1 = new Person("Bad Guy Mike");
     Person bad2 = new Person("Bad Guy Jake");
 
