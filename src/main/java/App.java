@@ -35,6 +35,27 @@ public class App {
       boolean proximityBad1 = player.inRange(bad1);
       boolean proximityBad2 = player.inRange(bad2);
 
+      String message = "You are not in combat";
+
+      //If a player is close to an NPC it either has the NPC perform
+      //A melee attack, or if both are close by it will choose a random NPC
+      Random randomGenerator = new Random();
+      int random = randomGenerator.nextInt(2);
+      if(proximityBad2 == true || proximityBad1 == true) {
+        message = "You are in combant, fight back!";
+        if(proximityBad1 == true && proximityBad2 == true) {
+          if(random == 1) {
+            bad1.melee(player);
+          } else {
+            bad2.melee(player);
+          }
+        } else if(proximityBad1 == true) {
+          bad1.melee(player);
+        } else if(proximityBad2 == true) {
+          bad2.melee(player);
+        }
+      }
+      //If player's health goes below 0 the game is over
       if(player.getHealth() <= 0) {
           response.redirect("/dead" );
           return null;
@@ -52,11 +73,34 @@ public class App {
       model.put("bad1", bad1);
       model.put("bad2", bad2);
 
-      // model.put("combat-status", message);
+       model.put("combat-status", message);
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/movement/attack", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/index.vtl");
+
+      Random randomGenerator = new Random();
+
+      int random = randomGenerator.nextInt(2);
+
+      if(player.inRange(bad1) == true && player.inRange(bad2) == true) {
+        if(random == 1) {
+          player.melee(bad1);
+        } else {
+          player.melee(bad2);
+        }
+      } else if(player.inRange(bad1)) {
+        player.melee(bad1);
+      } else if(player.inRange(bad2)) {
+        player.melee(bad2);
+      }
+
+      response.redirect("/" );
+      return null;
+    });
 
     get("/movement/left", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
