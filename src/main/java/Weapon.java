@@ -1,5 +1,7 @@
 import org.sql2o.*;
 import java.util.List;
+import java.lang.Math;
+import java.util.Random;
 
 public class Weapon {
 
@@ -16,6 +18,9 @@ public class Weapon {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
     this.person_id = 0;
+    Random coords = new Random();
+    this.x_coordinate = coords.nextInt(400);
+    this.y_coordinate = coords.nextInt(400);
   }
 
   public int getId() {
@@ -57,11 +62,13 @@ public int getYCoordinate() {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons (nameofweapon, damage, person_id) VALUES (:nameofweapon, :damage, :person_id);";
+      String sql = "INSERT INTO weapons (nameofweapon, damage, person_id, x_coordinate, y_coordinate) VALUES (:nameofweapon, :damage, :person_id, :x_coordinate, :y_coordinate);";
       this.id = (int) con.createQuery(sql, true)
           .addParameter("nameofweapon", nameOfWeapon)
           .addParameter("damage", damage)
           .addParameter("person_id", person_id)
+          .addParameter("x_coordinate", x_coordinate)
+          .addParameter("y_coordinate", y_coordinate)
           .executeUpdate()
           .getKey();
     }
