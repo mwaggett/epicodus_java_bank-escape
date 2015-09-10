@@ -20,10 +20,12 @@ public class App {
     Player player = new Player("John");
     Person bad1 = new Person("Bad Guy Mike");
     Person bad2 = new Person("Bad Guy Jake");
+    Weapon weapon = new Weapon("Metal Pipe", 20);
 
+    player.save();
     bad1.save();
     bad2.save();
-    player.save();
+    weapon.save();
 
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -34,9 +36,22 @@ public class App {
       int bad1_radius = 5;
       int bad2_radius = 5;
 
+      int weapon_x1 = weapon.getXCoordinate() - 5;
+      int weapon_y1 = weapon.getYCoordinate() + 5;
+      int weapon_x2 = weapon.getXCoordinate() + 5;
+      int weapon_y2 = weapon.getYCoordinate() - 5;
+
       npcMovement(player, bad1);
       npcMovement(player, bad2);
 
+      //If player is within range of a weapon, it picks up the weapon.
+      if(player.weaponInRange(weapon)) {
+        player.pickUp(weapon);
+        weapon_x1 = player.getXCoordinate();
+        weapon_y1 = player.getYCoordinate();
+        weapon_x2 = player.getXCoordinate();
+        weapon_y2 = player.getYCoordinate();
+      }
 
       //If a player is close to an NPC it either has the NPC perform
       //A melee attack, or if both are close by it will choose a random NPC
@@ -57,7 +72,7 @@ public class App {
         bad2_radius = 0;
         bad2.delete();
       }
-      if (player.escaped() == true) {
+      if (player.escaped()) {
         response.redirect("/success" );
         return null;
       }
@@ -67,30 +82,47 @@ public class App {
       model.put("bad2", bad2);
       model.put("bad1_radius", bad1_radius);
       model.put("bad2_radius", bad2_radius);
+      model.put("weapon", weapon);
+      model.put("weapon_x1", weapon_x1);
+      model.put("weapon_y1", weapon_y1);
+      model.put("weapon_x2", weapon_x2);
+      model.put("weapon_y2", weapon_y2);
 
-       model.put("combat-status", message);
+      model.put("combat-status", message);
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
     get("/movement/attack", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/index.vtl");
 
       Random randomGenerator = new Random();
 
-      int random = randomGenerator.nextInt(2);
+      int random = randomGenerator.nextInt(1);
 
-      if(player.inRange(bad1) == true && player.inRange(bad2) == true) {
-        if(random == 1) {
+      if(player.getWeapons().contains(weapon)) {
+        if(player.inRange(bad1) && player.inRange(bad2)) {
+          if(random == 1) {
+            player.use(weapon, bad1);
+          } else {
+            player.use(weapon, bad2);
+          }
+        } else if(player.inRange(bad1)) {
+          player.use(weapon, bad1);
+        } else if(player.inRange(bad2)) {
+          player.use(weapon, bad2);
+        }
+      } else {
+        if(player.inRange(bad1) && player.inRange(bad2)) {
+          if(random == 1) {
+            player.melee(bad1);
+          } else {
+            player.melee(bad2);
+          }
+        } else if(player.inRange(bad1)) {
           player.melee(bad1);
-        } else {
+        } else if(player.inRange(bad2)) {
           player.melee(bad2);
         }
-      } else if(player.inRange(bad1)) {
-        player.melee(bad1);
-      } else if(player.inRange(bad2)) {
-        player.melee(bad2);
       }
 
       response.redirect("/" );
@@ -98,37 +130,33 @@ public class App {
     });
 
     get("/movement/left", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/index.vtl");
 
       player.moveLeft();
       response.redirect("/" );
       return null;
     });
+
     get("/movement/right", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/index.vtl");
 
       player.moveRight();
       response.redirect("/" );
       return null;
     });
+
     get("/movement/up", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/index.vtl");
 
       player.moveUp();
       response.redirect("/" );
       return null;
     });
+
     get("/movement/down", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/index.vtl");
 
       player.moveDown();
       response.redirect("/" );
       return null;
     });
+
     get("/dead", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/dead.vtl");

@@ -159,6 +159,14 @@ public class Person {
     return false;
   }
 
+  public boolean weaponInRange(Weapon weapon) {
+    if(Math.abs(x_coordinate - weapon.getXCoordinate()) <= 10 &&
+      (Math.abs(y_coordinate - weapon.getYCoordinate())) <= 10) {
+        return true;
+    }
+    return false;
+  }
+
   public void melee(Person target) {
     int attackerNewHealth = this.getHealth() - randomGenerator.nextInt(6);
     int targetNewHealth = target.getHealth() - randomGenerator.nextInt(11);
