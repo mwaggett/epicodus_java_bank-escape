@@ -32,7 +32,13 @@ public class App {
       npcMovement(player, bad1);
       npcMovement(player, bad2);
 
-      String message = checkIfCloseToNPC(player, bad1, bad2);
+      boolean proximityBad1 = player.inRange(bad1);
+      boolean proximityBad2 = player.inRange(bad2);
+
+      if(player.getHealth() <= 0) {
+          response.redirect("/dead" );
+          return null;
+      }
       model.put("x", player.getXCoordinate());
       model.put("y", player.getYCoordinate());
 
@@ -46,7 +52,7 @@ public class App {
       model.put("bad1", bad1);
       model.put("bad2", bad2);
 
-      model.put("combat-status", message);
+      // model.put("combat-status", message);
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -84,6 +90,12 @@ public class App {
       response.redirect("/" );
       return null;
     });
+    get("/dead", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/dead.vtl");
+
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 
   public static void npcMovement(Player player, Person person) {
@@ -105,7 +117,7 @@ public class App {
         person.moveDown();
       }
     } else {
-      randomlyMove(person);
+      person.moveRandom();
     }
   }
 

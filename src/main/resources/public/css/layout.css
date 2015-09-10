@@ -3,17 +3,24 @@
   width: 400px;
   border: black 1px solid;
 }
-.right {
-  margin-top: 20px;
-  margin-left: 40px;
+h1 {
+  font-family: 'Orbitron', sans-serif;
 }
-.left {
-  margin-top:100px;
+.jumbotron {
+  background-image: url("/img/tree_bark.png");
+}
+.button {
+  width: 60px;
+  height: 60px;
+}
 
+.right {
+  margin-left: 20px;
 }
-.down {
-  margin-top: 100px;
+.down, .up {
+  margin-left: 30px;
 }
-.display-inline .button {
-  display: inline-block;
+
+.attack {
+  width: 120px;
 }
