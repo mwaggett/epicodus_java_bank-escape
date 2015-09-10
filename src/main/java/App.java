@@ -33,6 +33,11 @@ public class App {
       npcMovement(player, bad2);
 
       String message = checkIfCloseToNPC(player, bad1, bad2);
+
+      if(player.getHealth() <= 0) {
+          response.redirect("/dead" );
+          return null;
+      }
       model.put("x", player.getXCoordinate());
       model.put("y", player.getYCoordinate());
 
@@ -84,6 +89,12 @@ public class App {
       response.redirect("/" );
       return null;
     });
+    get("/dead", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/dead.vtl");
+
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 
   public static void npcMovement(Person player, Person person) {
