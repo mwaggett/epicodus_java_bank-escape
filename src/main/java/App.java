@@ -33,6 +33,7 @@ public class App {
       model.put("template", "templates/index.vtl");
 
       String message;
+      String event_message = " ";
 
       int bad1_radius = 5;
       int bad2_radius = 5;
@@ -42,8 +43,12 @@ public class App {
       int weapon_x2 = weapon.getXCoordinate() + 5;
       int weapon_y2 = weapon.getYCoordinate() - 5;
 
-      npcMovement(player, bad1);
-      npcMovement(player, bad2);
+      if(!bad1.isDead()) {
+        npcMovement(player, bad1);
+      }
+      if(!bad2.isDead()) {
+        npcMovement(player, bad2);
+      }
 
       //If player is within range of a weapon, it picks up the weapon.
       if(player.weaponInRange(weapon)) {
@@ -65,11 +70,12 @@ public class App {
       }
       //If an NPC is dead, the radius is set to zero to make the character disappear
       if(bad1.getHealth() <= 0) {
-        message = bad1.getName() + " is dead!";
+        event_message = bad1.getName() + " is dead";
         bad1_radius = 0;
         bad1.delete();
-      } else if(bad2.getHealth() <= 0) {
-        message = bad2.getName() + " is dead!";
+      }
+       if(bad2.getHealth() <= 0) {
+        event_message = bad2.getName() + " is dead";
         bad2_radius = 0;
         bad2.delete();
       }
@@ -88,7 +94,7 @@ public class App {
       model.put("weapon_y1", weapon_y1);
       model.put("weapon_x2", weapon_x2);
       model.put("weapon_y2", weapon_y2);
-
+      model.put("event_message", event_message);
       model.put("combat-status", message);
 
       return new ModelAndView(model, layout);
@@ -201,6 +207,8 @@ public class App {
     boolean proximityBad1 = player.inRange(bad1);
     boolean proximityBad2 = player.inRange(bad2);
 
+    boolean bad1_is_dead = bad1.isDead();
+    boolean bad2_is_dead = bad2.isDead();
     String message = "You are not in combat";
 
     Random randomGenerator = new Random();
@@ -208,15 +216,16 @@ public class App {
 
     if(proximityBad2 == true || proximityBad1 == true) {
        message = "You are in combant, fight back!";
-      if(proximityBad1 == true && proximityBad2 == true) {
-        if(random == 1) {
-          bad1.melee(player);
-        } else {
-          bad2.melee(player);
-        }
-      } else if(proximityBad1 == true) {
+        if((proximityBad1 == true && proximityBad2 == true)
+          && (bad1_is_dead == false && bad2_is_dead == false) ) {
+          if(random == 1) {
+            bad1.melee(player);
+          } else {
+            bad2.melee(player);
+          }
+      } else if(proximityBad1 == true && bad1_is_dead == false) {
         bad1.melee(player);
-      } else if(proximityBad2 == true) {
+      } else if(proximityBad2 == true && bad2_is_dead == false) {
         bad2.melee(player);
       }
     }
