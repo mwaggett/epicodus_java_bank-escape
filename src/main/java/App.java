@@ -68,6 +68,7 @@ public class App {
       for (Weapon weapon : Weapon.all()) {
         if(player.weaponInRange(weapon)) {
           player.pickUp(weapon);
+          event_message = "Picked up weapon";
         }
       }
       if(player.getWeapons().contains(weapon1)) {
