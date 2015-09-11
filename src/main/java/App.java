@@ -53,6 +53,7 @@ public class App {
       //If player is within range of a weapon, it picks up the weapon.
       if(player.weaponInRange(weapon)) {
         player.pickUp(weapon);
+        event_message = "Picked up weapon";
       }
       if(player.getWeapons().contains(weapon)) {
         weapon_x1 = player.getXCoordinate();

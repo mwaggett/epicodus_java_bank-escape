@@ -1,5 +1,7 @@
 <div class="row">
   <div class="col-md-6">
+    <br>
+    <br>
     <div class="game-border">
       <svg height="400" width="400">
         <circle cx=$player.getXCoordinate() cy=$player.getYCoordinate() r="5" stroke="black" stroke-width="1" fill="blue" />
@@ -14,11 +16,47 @@
            style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
         <rect x="300" y="0" width="40" height="20"
               style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
-        <line x1=$weapon_x1 y1=$weapon_y1 x2=$weapon_x2  y2=$weapon_y2 style="stroke:black;stroke-width:4" />
+        <!-- Weapons -->
+        <line x1=$weapon1_x1 y1=$weapon1_y1 x2=$weapon1_x2 y2=$1weapon_y2 style="stroke:black;stroke-width:4" />
+        <polygon points=$weapon2_coords style="fill:lime;stroke:purple;stroke-width:1" />
+        <rect x=$weapon3_x1 y="$weapon3_y1" width="10" height="20"
+              style="fill:#3a0a0a;stroke:gray;stroke-width:2;" />
       </svg>
+    </div>
+    <div class="status-bar">
+      <h3 class="bg-danger">$event_message</h3>
     </div>
   </div>
   <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Health</th>
+          <th>$bad1.getName()</th>
+          <th>$bad2.getName()</th>
+        </tr>
+      </thead>
+      <tbody>
+        <h3><tr>
+          <td>$player.getHealth()</td>
+          <td>
+            #if ($bad1.getHealth() > 0)
+              $bad1.getHealth()
+            #else
+              <p>DEAD</p>
+            #end
+          </td>
+          <td>
+            #if ($bad2.getHealth() > 0)
+              $bad2.getHealth()
+            #else
+              <p>DEAD</p>
+            #end
+          </td>
+        </tr></h3>
+
+      </tbody>
+    </table>
       <form action="/movement/up">
         <button class="button btn-sm btn-danger up" type="submit">Go up</button>
       </form>
@@ -46,34 +84,5 @@
         <h3>$combat-status</h3>
         </div>
       </div>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Health</th>
-            <th>$bad1.getName()</th>
-            <th>$bad2.getName()</th>
-          </tr>
-        </thead>
-        <tbody>
-          <h3><tr>
-            <td>$player.getHealth()</td>
-            <td>
-              #if ($bad1.getHealth() > 0)
-                $bad1.getHealth()
-              #else
-                <p>DEAD</p>
-              #end
-            </td>
-            <td>
-              #if ($bad2.getHealth() > 0)
-                $bad2.getHealth()
-              #else
-                <p>DEAD</p>
-              #end
-            </td>
-          </tr></h3>
-
-        </tbody>
-      </table>
   </div>
 </div>
