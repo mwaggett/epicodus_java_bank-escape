@@ -20,12 +20,16 @@ public class App {
     Player player = new Player("John");
     Person bad1 = new Person("Bad Guy Mike");
     Person bad2 = new Person("Bad Guy Jake");
-    Weapon weapon = new Weapon("Metal Pipe", 20);
+    Weapon weapon1 = new Weapon("Metal Pipe", 20);
+    Weapon weapon2 = new Weapon("Glass Shard", 30);
+    Weapon weapon3 = new Weapon("Piece of Paper", 5);
 
     player.save();
     bad1.save();
     bad2.save();
-    weapon.save();
+    weapon1.save();
+    weapon2.save();
+    weapon3.save();
 
 
     get("/", (request, response) -> {
@@ -38,10 +42,20 @@ public class App {
       int bad1_radius = 5;
       int bad2_radius = 5;
 
-      int weapon_x1;
-      int weapon_y1;
-      int weapon_x2;
-      int weapon_y2;
+      int weapon1_x1;
+      int weapon1_y1;
+      int weapon1_x2;
+      int weapon1_y2;
+
+      int weapon2_x1;
+      int weapon2_y1;
+      int weapon2_x2;
+      int weapon2_y2;
+      int weapon2_x3;
+      int weapon2_y3;
+
+      int weapon3_x;
+      int weapon3_y;
 
       if(!bad1.isDead()) {
         npcMovement(player, bad1);
@@ -51,19 +65,44 @@ public class App {
       }
 
       //If player is within range of a weapon, it picks up the weapon.
-      if(player.weaponInRange(weapon)) {
-        player.pickUp(weapon);
+      for (Weapon weapon : Weapon.all()) {
+        if(player.weaponInRange(weapon)) {
+          player.pickUp(weapon);
+        }
       }
-      if(player.getWeapons().contains(weapon)) {
-        weapon_x1 = player.getXCoordinate();
-        weapon_y1 = player.getYCoordinate();
-        weapon_x2 = player.getXCoordinate() + 10;
-        weapon_y2 = player.getYCoordinate() - 10;
+      if(player.getWeapons().contains(weapon1)) {
+        weapon1_x1 = player.getXCoordinate();
+        weapon1_y1 = player.getYCoordinate();
+        weapon1_x2 = player.getXCoordinate() + 10;
+        weapon1_y2 = player.getYCoordinate() - 10;
       } else {
-        weapon_x1 = weapon.getXCoordinate() - 5;
-        weapon_y1 = weapon.getYCoordinate() + 5;
-        weapon_x2 = weapon.getXCoordinate() + 5;
-        weapon_y2 = weapon.getYCoordinate() - 5;
+        weapon1_x1 = weapon1.getXCoordinate() - 5;
+        weapon1_y1 = weapon1.getYCoordinate() + 5;
+        weapon1_x2 = weapon1.getXCoordinate() + 5;
+        weapon1_y2 = weapon1.getYCoordinate() - 5;
+      }
+      if(player.getWeapons().contains(weapon2)) {
+        weapon2_x1 = player.getXCoordinate();
+        weapon2_y1 = player.getYCoordinate();
+        weapon2_x2 = player.getXCoordinate() + 4;
+        weapon2_y2 = player.getYCoordinate() - 6;
+        weapon2_x3 = player.getXCoordinate() + 8;
+        weapon2_y3 = player.getYCoordinate();
+      } else {
+        weapon2_x1 = weapon2.getXCoordinate();
+        weapon2_y1 = weapon2.getYCoordinate();
+        weapon2_x2 = weapon2.getXCoordinate() + 4;
+        weapon2_y2 = weapon2.getYCoordinate() - 6;
+        weapon2_x3 = weapon2.getXCoordinate() + 8;
+        weapon2_y3 = weapon2.getYCoordinate();
+      }
+      String weapon2_coords = String.format("%d,%d %d,%d %d,%d", weapon2_x1, weapon2_y1, weapon2_x2, weapon2_y2, weapon2_x3, weapon2_y3);
+      if(player.getWeapons().contains(weapon1)) {
+        weapon1_x = player.getXCoordinate();
+        weapon1_y = player.getYCoordinate() - 20;
+      } else {
+        weapon1_x = weapon1.getXCoordinate();
+        weapon1_y = weapon1.getYCoordinate();
       }
 
       //If a player is close to an NPC it either has the NPC perform
