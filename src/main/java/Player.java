@@ -11,4 +11,8 @@ public class Player extends Person {
     this.health = 100;
   }
 
+  public boolean escaped() {
+    return (x_coordinate >= 175 && x_coordinate <= 225 && y_coordinate >= 390);
+  }
+
 }

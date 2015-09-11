@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import java.util.List;
 import java.util.Random;
+import java.lang.Math;
 
 public class Person {
 
@@ -39,6 +40,17 @@ public class Person {
     return health;
   }
 
+  public void setHealth(int newHealth) {
+    this.health = newHealth;
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE people SET health = :health WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter("health", newHealth)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
   @Override
   public boolean equals(Object otherPersonInstance) {
     if (!(otherPersonInstance instanceof Person)) {
@@ -46,11 +58,8 @@ public class Person {
     } else {
       Person newPersonInstance = (Person) otherPersonInstance;
       return this.getName().equals(newPersonInstance.getName()) &&
-             // this.getXCoordinate() == newPersonInstance.getXCoordinate() &&
-             // this.getYCoordinate() == newPersonInstance.getYCoordinate() &&
-             // ^Since locations are randomly generated, these won't be equal.
-             // Do we just want people with the same name to be equal? idk.
-             // Or should we include these anyway and it's just hard to test?
+             this.getXCoordinate() == newPersonInstance.getXCoordinate() &&
+             this.getYCoordinate() == newPersonInstance.getYCoordinate() &&
              this.getHealth() == newPersonInstance.getHealth() &&
              this.getId() == newPersonInstance.getId();
     }
@@ -70,7 +79,11 @@ public class Person {
   }
 
   public void moveLeft() {
-    this.x_coordinate -= 10;
+    if (x_coordinate < 10) {
+      this.x_coordinate = 0;
+    } else {
+      this.x_coordinate -= 10;
+    }
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET x_coordinate = :x WHERE id = :id";
       con.createQuery(sql)
@@ -81,7 +94,11 @@ public class Person {
   }
 
   public void moveRight() {
-    this.x_coordinate += 10;
+    if (x_coordinate > 390) {
+      this.x_coordinate = 400;
+    } else {
+      this.x_coordinate += 10;
+    }
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET x_coordinate = :x WHERE id = :id";
       con.createQuery(sql)
@@ -92,7 +109,11 @@ public class Person {
   }
 
   public void moveUp() {
-    this.y_coordinate -= 10;
+    if (y_coordinate < 10) {
+      this.y_coordinate = 0;
+    } else {
+      this.y_coordinate -= 10;
+    }
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET y_coordinate = :y WHERE id = :id";
       con.createQuery(sql)
@@ -103,7 +124,11 @@ public class Person {
   }
 
   public void moveDown() {
-    this.y_coordinate += 10;
+    if (y_coordinate > 390) {
+      this.y_coordinate = 400;
+    } else {
+      this.y_coordinate += 10;
+    }
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE people SET y_coordinate = :y WHERE id = :id";
       con.createQuery(sql)
@@ -113,23 +138,65 @@ public class Person {
     }
   }
 
-  public void melee(Person target) {
-    this.health -= randomGenerator.nextInt(6);
-    try(Connection con = DB.sql2o.open()) {
-      String attackerQuery = "UPDATE people SET health = :health WHERE id = :id";
-      con.createQuery(attackerQuery)
-        .addParameter("health", health)
-        .addParameter("id", id)
-        .executeUpdate();
-
-      String targetQuery = "UPDATE people SET health = :health WHERE id = :id";
-      con.createQuery(targetQuery)
-        .addParameter("health", target.getHealth() - randomGenerator.nextInt(11))
-        .addParameter("id", target.getId())
-        .executeUpdate();
-      // I'm worried about the fact that we're not updating the target instance
-      // and only the entry in the database. But maybe that doesn't matter.
+  public void moveRandom() {
+    int random = randomGenerator.nextInt(4);
+    if(random == 1) {
+      this.moveUp();
+    } else if(random == 2) {
+      this.moveDown();
+    } else if(random == 3) {
+      this.moveLeft();
+    } else {
+      this.moveRight();
     }
+  }
+
+  public boolean inRange(Person opponent) {
+    if(Math.abs(x_coordinate - opponent.getXCoordinate()) <= 20 &&
+      (Math.abs(y_coordinate - opponent.getYCoordinate())) <= 20) {
+        return true;
+    }
+    return false;
+  }
+
+  public boolean weaponInRange(Weapon weapon) {
+    if(Math.abs(x_coordinate - weapon.getXCoordinate()) <= 10 &&
+      (Math.abs(y_coordinate - weapon.getYCoordinate())) <= 10) {
+        return true;
+    }
+    return false;
+  }
+
+  public void melee(Person target) {
+    int attackerNewHealth = this.getHealth() - randomGenerator.nextInt(6);
+    int targetNewHealth = target.getHealth() - randomGenerator.nextInt(11);
+
+    this.setHealth(attackerNewHealth);
+    target.setHealth(targetNewHealth);
+  }
+
+  public void pickUp(Weapon weapon) {
+    weapon.addPerson(this);
+  }
+
+  public List<Weapon> getWeapons() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM weapons WHERE person_id = :id";
+      return con.createQuery(sql)
+          .addParameter("id", id)
+          .executeAndFetch(Weapon.class);
+    }
+  }
+
+  public void use(Weapon weapon, Person target) {
+    int targetNewHealth = target.getHealth() - weapon.getDamage();
+    target.setHealth(targetNewHealth);
+    // Not yet checking whether person even has the weapon.
+    // Maybe eventually will take into account how close attacker and target are.
+  }
+
+  public boolean isDead() {
+    return (this.getHealth() <= 0);
   }
 
   public void delete() {

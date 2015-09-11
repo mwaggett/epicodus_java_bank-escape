@@ -1,25 +1,28 @@
-# Application Name
+# Bank Escape!
 
-##### _{Brief description of application}, {Date of current version}_
+##### _Can you escape before the guards get you?, {9/11/2015}_
 
-#### By **Molly Waggett**
+#### By:
+
+**Yelena Belikova, Maggie O'Neill, Daryl Seaver, Molly Waggett**
 
 ## Description
-
-{This is a detailed description of your application. Give as much detail as needed to explain what the application does, and any other information you want users or other developers to have. Do you want other developers to use this code in their apps? Talk about things like that here in simple terms.}
+A game where you have to get out of the bank before the guards kill you. You are able to attack the guards back with either a weapon or a melee attack. Run for the door!
 
 ## Setup
-
 * Set up the database in PostgreSQL by running the following commands in your terminal:
 ```
   psql
-  CREATE DATABASE database_name;
-  \c database_name;
-  CREATE TABLE table_name (id serial PRIMARY KEY, attribute varchar);
+  CREATE DATABASE bank_escape;
+  \c bank_escape;
+```
+To dump the sql file into the db navigate to the root directory of the project and run:
+```
+$ psql bank_escape < bank_escape.sql
 ```
 * If you wish to run tests, create a test database:
 ```
-  CREATE DATABASE database_name_test WITH TEMPLATE database_name;
+  CREATE DATABASE bank_escape_test WITH TEMPLATE bank_escape;
 ```
 * Clone this repository.
 * Using the command line, navigate to the top level of the cloned directory.
@@ -42,7 +45,7 @@
 
 ### Legal
 
-Copyright (c) 2015 **Molly Waggett**
+Copyright (c) 2015 **Molly Waggett, Yelena Belikova, Daryl Seaver, Maggie O'Neill**
 
 This software is licensed under the MIT license.
 

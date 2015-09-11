@@ -1,19 +1,24 @@
 import org.sql2o.*;
 import java.util.List;
+import java.lang.Math;
+import java.util.Random;
 
 public class Weapon {
-  //private List<Weapon> weapons;
+
   private int id;
   private int damage;
   private String nameOfWeapon;
-  private int numberOfUses;
-  private boolean broken;
+  private int person_id;
+  private int x_coordinate;
+  private int y_coordinate;
 
   public Weapon (String nameOfWeapon, int damage) {
     this.nameOfWeapon = nameOfWeapon;
     this.damage = damage;
-    this.numberOfUses = 3;
-    //this.broken = false;
+    this.person_id = 0;
+    Random coords = new Random();
+    this.x_coordinate = coords.nextInt(401);
+    this.y_coordinate = coords.nextInt(401);
   }
 
   public int getId() {
@@ -28,28 +33,43 @@ public class Weapon {
    return damage;
  }
 
- public int getNumberOfUses(){
-   return numberOfUses;
- }
+public int getPersonId(){
+  return person_id;
+}
+
+
+public int getXCoordinate() {
+  return x_coordinate;
+}
+
+public int getYCoordinate() {
+  return y_coordinate;
+}
 
   @Override
   public boolean equals(Object otherWeapon) {
     if (!(otherWeapon instanceof Weapon)) {
       return false;
     } else {
-      Class newWeapon = (Class) otherWeapon;
+      Weapon newWeapon = (Weapon) otherWeapon;
       return    this.getId() == newWeapon.getId() &&
                 this.getNameOfWeapon().equals(newWeapon.getNameOfWeapon()) &&
                 this.getDamage() == newWeapon.getDamage() &&
-                this.getNumberOfUses() == newWeapon.getNumberOfUses();
+                this.getPersonId() == newWeapon.getPersonId() &&
+                this.getXCoordinate() == newWeapon.getXCoordinate() &&
+                this.getYCoordinate() == newWeapon.getYCoordinate();
     }
   }
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons (name_of_weapon) VALUES (:name_of_weapon);";
+      String sql = "INSERT INTO weapons (nameofweapon, damage, person_id, x_coordinate, y_coordinate) VALUES (:nameofweapon, :damage, :person_id, :x_coordinate, :y_coordinate);";
       this.id = (int) con.createQuery(sql, true)
-          .addParameter("name_of_weapon", name_of_weapon)
+          .addParameter("nameofweapon", nameOfWeapon)
+          .addParameter("damage", damage)
+          .addParameter("person_id", person_id)
+          .addParameter("x_coordinate", x_coordinate)
+          .addParameter("y_coordinate", y_coordinate)
           .executeUpdate()
           .getKey();
     }
@@ -58,9 +78,9 @@ public class Weapon {
   public void update(String nameOfWeapon) {
     this.nameOfWeapon = nameOfWeapon;
     try(Connection con = DB.sql2o.open()){
-      String sql = "UPDATE weapons SET name_of_weapon = :name_of_weapon WHERE id = :id";
+      String sql = "UPDATE weapons SET nameofweapon = :nameofweapon WHERE id = :id";
       con.createQuery(sql)
-      .addParameter("name_of_weapon", name_of_weapon)
+      .addParameter("nameofweapon", nameOfWeapon)
       .addParameter("id", id)
       .executeUpdate();
     }
@@ -73,7 +93,7 @@ public class Weapon {
      .addParameter("id", id)
      .executeUpdate();
 
-     String deletePersonWeapon = "DELETE FROM Person_weapons WHERE weapons_id = :id";
+     String deletePersonWeapon = "DELETE FROM people_weapons WHERE weapons_id = :id";
       con.createQuery(deletePersonWeapon)
       .addParameter("id", id)
       .executeUpdate();
@@ -98,48 +118,25 @@ public class Weapon {
   }
 
   public void addPerson(Person person) {
+    this.person_id = person.getId();
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO weapons_person (weapon_id, Person_id) VALUES (:weapon_id, :Person_id)";
+      String sql = "UPDATE weapons SET person_id = :person_id WHERE id = :weapon_id";
       con.createQuery(sql)
+        .addParameter("person_id", person.getId())
         .addParameter("weapon_id", id)
-        .addParameter("Person_id", Person.getId())
         .executeUpdate();
-    }
-  }
-
-  public void removePerson(Person Person){
-    try(Connection con = DB.sql2o.open()){
-      String sql = "DELETE FROM weapons_person WHERE weapon_id = :weapon_id AND Person_id = :Person_id";
-      con.createQuery(sql)
-      .addParameter("weapon_id", id)
-      .addParameter("Person_id", Person.getId())
-      .executeUpdate();
-    }
-  }
-
-  public List<Person> getPerson() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT person.* FROM weapons JOIN weapons_person ON (weapons.id = weapons_person.weapon_id) JOIN person ON (weapons_person.Person_id = person.id) WHERE weapons.id = :id";
-      List<Person> person = con.createQuery(sql)
-        .addParameter("id", id)
-        .executeAndFetch(Person.class);
-      return person;
     }
   }
 
   public static List<Weapon> search(String query) {
     try(Connection con = DB.sql2o.open()) {
       String searchQuery = "%"+query+"%";
-      String sql = "SELECT * FROM weapons WHERE name_of_weapon LIKE :searchQuery";
+      String sql = "SELECT * FROM weapons WHERE nameofweapon LIKE :searchQuery";
       List<Weapon> weapons = con.createQuery(sql)
         .addParameter("searchQuery", searchQuery)
         .executeAndFetch(Weapon.class);
       return weapons;
     }
-  }
-
-  public boolean isBroken(){
-  return broken;
   }
 
 }

@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: people; Type: TABLE; Schema: public; Owner: Molly; Tablespace: 
+-- Name: people; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
 CREATE TABLE people (
@@ -42,10 +42,10 @@ CREATE TABLE people (
 );
 
 
-ALTER TABLE people OWNER TO "Molly";
+ALTER TABLE people OWNER TO "Guest";
 
 --
--- Name: people_id_seq; Type: SEQUENCE; Schema: public; Owner: Molly
+-- Name: people_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE people_id_seq
@@ -56,33 +56,33 @@ CREATE SEQUENCE people_id_seq
     CACHE 1;
 
 
-ALTER TABLE people_id_seq OWNER TO "Molly";
+ALTER TABLE people_id_seq OWNER TO "Guest";
 
 --
--- Name: people_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Molly
+-- Name: people_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
--- Name: weapons; Type: TABLE; Schema: public; Owner: Molly; Tablespace: 
+-- Name: weapons; Type: TABLE; Schema: public; Owner: Guest; Tablespace: 
 --
 
 CREATE TABLE weapons (
     id integer NOT NULL,
     nameofweapon character varying,
     damage integer,
-    numberofuses integer,
-    broken boolean,
-    person_id integer
+    person_id integer,
+    x_coordinate integer,
+    y_coordinate integer
 );
 
 
-ALTER TABLE weapons OWNER TO "Molly";
+ALTER TABLE weapons OWNER TO "Guest";
 
 --
--- Name: weapons_id_seq; Type: SEQUENCE; Schema: public; Owner: Molly
+-- Name: weapons_id_seq; Type: SEQUENCE; Schema: public; Owner: Guest
 --
 
 CREATE SEQUENCE weapons_id_seq
@@ -93,61 +93,64 @@ CREATE SEQUENCE weapons_id_seq
     CACHE 1;
 
 
-ALTER TABLE weapons_id_seq OWNER TO "Molly";
+ALTER TABLE weapons_id_seq OWNER TO "Guest";
 
 --
--- Name: weapons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Molly
+-- Name: weapons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Guest
 --
 
 ALTER SEQUENCE weapons_id_seq OWNED BY weapons.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: Molly
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY people ALTER COLUMN id SET DEFAULT nextval('people_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: Molly
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Guest
 --
 
 ALTER TABLE ONLY weapons ALTER COLUMN id SET DEFAULT nextval('weapons_id_seq'::regclass);
 
 
 --
--- Data for Name: people; Type: TABLE DATA; Schema: public; Owner: Molly
+-- Data for Name: people; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
 COPY people (id, name, x_coordinate, y_coordinate, health) FROM stdin;
+1	Bad Guy Mike	133	124	95
+2	Bad Guy Jake	224	58	32
+3	John	141	64	92
 \.
 
 
 --
--- Name: people_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Molly
+-- Name: people_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('people_id_seq', 1, false);
+SELECT pg_catalog.setval('people_id_seq', 3, true);
 
 
 --
--- Data for Name: weapons; Type: TABLE DATA; Schema: public; Owner: Molly
+-- Data for Name: weapons; Type: TABLE DATA; Schema: public; Owner: Guest
 --
 
-COPY weapons (id, nameofweapon, damage, numberofuses, broken, person_id) FROM stdin;
+COPY weapons (id, nameofweapon, damage, person_id, x_coordinate, y_coordinate) FROM stdin;
 \.
 
 
 --
--- Name: weapons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Molly
+-- Name: weapons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
 SELECT pg_catalog.setval('weapons_id_seq', 1, false);
 
 
 --
--- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: Molly; Tablespace: 
+-- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
 --
 
 ALTER TABLE ONLY people
@@ -155,7 +158,7 @@ ALTER TABLE ONLY people
 
 
 --
--- Name: weapons_pkey; Type: CONSTRAINT; Schema: public; Owner: Molly; Tablespace: 
+-- Name: weapons_pkey; Type: CONSTRAINT; Schema: public; Owner: Guest; Tablespace: 
 --
 
 ALTER TABLE ONLY weapons
@@ -163,12 +166,12 @@ ALTER TABLE ONLY weapons
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: Molly
+-- Name: public; Type: ACL; Schema: -; Owner: epicodus
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM "Molly";
-GRANT ALL ON SCHEMA public TO "Molly";
+REVOKE ALL ON SCHEMA public FROM epicodus;
+GRANT ALL ON SCHEMA public TO epicodus;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 

@@ -1,28 +1,79 @@
-<h1>Home Page</h1>
-<form action='/newpage' method=''>
-  <div class='form-group'>
-    <label></label>
-    <input type="" name="" id="" class="form-control">
+<div class="row">
+  <div class="col-md-6">
+    <div class="game-border">
+      <svg height="400" width="400">
+        <circle cx=$player.getXCoordinate() cy=$player.getYCoordinate() r="5" stroke="black" stroke-width="1" fill="blue" />
+        <circle cx=$bad1.getXCoordinate() cy=$bad1.getYCoordinate() r=$bad1_radius stroke="black" stroke-width="1" fill="red" />
+        <circle cx=$bad2.getXCoordinate() cy=$bad2.getYCoordinate() r=$bad2_radius stroke="black" stroke-width="1" fill="red" />
+
+        <rect x="175" y="390" width="50" height="10"
+         style="fill:brown;stroke:black;stroke-width:5;" />
+        <rect x="100" y="0" width="40" height="20"
+            style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+        <rect x="200" y="0" width="40" height="20"
+           style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+        <rect x="300" y="0" width="40" height="20"
+              style="fill:#3a0a0a;stroke:black;stroke-width:5;" />
+        <line x1=$weapon_x1 y1=$weapon_y1 x2=$weapon_x2  y2=$weapon_y2 style="stroke:black;stroke-width:4" />
+      </svg>
+    </div>
   </div>
-  <button type="submit" class='btn'>Submit!</button>
-</form>
-<div class="game-border">
+  <div class="col-md-6">
+      <form action="/movement/up">
+        <button class="button btn-sm btn-danger up" type="submit">Go up</button>
+      </form>
+      <div class="row">
+        <div class=col-md-1>
+          <form action="/movement/left">
+            <button class="button btn-sm btn-danger left" type="submit">Go left</button>
+          </form>
+      </div>
+      <div class=col-md-1>
+        <form action="/movement/right">
+          <button class="button btn-sm btn-danger right" type="submit">Go right</button>
+        </form>
+      </div>
+    </div>
+      <form action="/movement/down">
+        <button class="button btn-sm btn-danger down" type="submit">Go down</button>
+      </form>
+      <form action="/movement/attack">
+        <button class="button btn-sm btn-primary attack" type="submit">Attack!</button>
+      </form>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-body">
+        <h3>$combat-status</h3>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Health</th>
+            <th>$bad1.getName()</th>
+            <th>$bad2.getName()</th>
+          </tr>
+        </thead>
+        <tbody>
+          <h3><tr>
+            <td>$player.getHealth()</td>
+            <td>
+              #if ($bad1.getHealth() > 0)
+                $bad1.getHealth()
+              #else
+                <p>DEAD</p>
+              #end
+            </td>
+            <td>
+              #if ($bad2.getHealth() > 0)
+                $bad2.getHealth()
+              #else
+                <p>DEAD</p>
+              #end
+            </td>
+          </tr></h3>
 
-
-  <svg height="400" width="400">
-      <g>
-         <circle cx=$x-bad1 cy=$y-bad1 r="5" stroke="black" stroke-width="1" fill="red" /></circle>
-         <text  x=$x-bad1 y=$y-bad1 font-family="Verdana" font-size="20" fill="red"> $bad1-text </text>
-     </g>
-     <g>
-       <circle cx=$x-bad2 cy=$y-bad2 r="5" stroke="black" stroke-width="1" fill="red" />
-      <text  x=$x-bad2 y=$ybad2 font-family="Verdana" font-size="20" fill="red"> $bad2-text </text>
-    </g>
-     <g>
-        <circle cx=$x cy=$y r="5" stroke="black" stroke-width="1" fill="blue"></circle>
-        <text  x=$x y=$y font-family="Verdana" font-size="20" fill="blue"> $good-guy-text </text>
-    </g>
-    <rect x="200" y="380" width="20" height="40"
-     style="fill:brown;stroke:black;stroke-width:5;opacity:0.5" />
-  </svg>
+        </tbody>
+      </table>
+  </div>
 </div>
