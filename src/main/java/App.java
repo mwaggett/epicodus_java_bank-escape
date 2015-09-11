@@ -68,7 +68,7 @@ public class App {
       for (Weapon weapon : Weapon.all()) {
         if(player.weaponInRange(weapon)) {
           player.pickUp(weapon);
-          event_message = "Picked up weapon";
+          event_message = "Picked up weapon: " + weapon.getNameOfWeapon() ;
         }
       }
       if(player.getWeapons().contains(weapon1)) {
@@ -98,12 +98,12 @@ public class App {
         weapon2_y3 = weapon2.getYCoordinate();
       }
       String weapon2_coords = String.format("%d,%d %d,%d %d,%d", weapon2_x1, weapon2_y1, weapon2_x2, weapon2_y2, weapon2_x3, weapon2_y3);
-      if(player.getWeapons().contains(weapon1)) {
-        weapon1_x = player.getXCoordinate();
-        weapon1_y = player.getYCoordinate() - 20;
+      if(player.getWeapons().contains(weapon3)) {
+        weapon3_x = player.getXCoordinate();
+        weapon3_y = player.getYCoordinate() - 20;
       } else {
-        weapon1_x = weapon1.getXCoordinate();
-        weapon1_y = weapon1.getYCoordinate();
+        weapon3_x = weapon1.getXCoordinate();
+        weapon3_y = weapon1.getYCoordinate();
       }
 
       //If a player is close to an NPC it either has the NPC perform
@@ -136,11 +136,17 @@ public class App {
       model.put("bad2", bad2);
       model.put("bad1_radius", bad1_radius);
       model.put("bad2_radius", bad2_radius);
-      model.put("weapon", weapon);
-      model.put("weapon_x1", weapon_x1);
-      model.put("weapon_y1", weapon_y1);
-      model.put("weapon_x2", weapon_x2);
-      model.put("weapon_y2", weapon_y2);
+      model.put("weapon1_x1", weapon1_x1);
+      model.put("weapon1_y1", weapon1_y1);
+      model.put("weapon1_x2", weapon1_x2);
+      model.put("weapon1_y2", weapon1_y2);
+
+      model.put("weapon2_coords", weapon2_coords);
+
+      model.put("weapon3_x", weapon3_x);
+      model.put("weapon3_y", weapon3_y);
+
+
       model.put("event_message", event_message);
       model.put("combat-status", message);
 
@@ -153,31 +159,31 @@ public class App {
 
       int random = randomGenerator.nextInt(1);
 
-      if(player.getWeapons().contains(weapon)) {
-        if(player.inRange(bad1) && player.inRange(bad2)) {
-          if(random == 1) {
-            player.use(weapon, bad1);
-          } else {
-            player.use(weapon, bad2);
-          }
-        } else if(player.inRange(bad1)) {
-          player.use(weapon, bad1);
-        } else if(player.inRange(bad2)) {
-          player.use(weapon, bad2);
-        }
-      } else {
-        if(player.inRange(bad1) && player.inRange(bad2)) {
-          if(random == 1) {
-            player.melee(bad1);
-          } else {
-            player.melee(bad2);
-          }
-        } else if(player.inRange(bad1)) {
-          player.melee(bad1);
-        } else if(player.inRange(bad2)) {
-          player.melee(bad2);
-        }
-      }
+      // if(player.getWeapons().contains(weapon)) {
+      //   if(player.inRange(bad1) && player.inRange(bad2)) {
+      //     if(random == 1) {
+      //       player.use(weapon, bad1);
+      //     } else {
+      //       player.use(weapon, bad2);
+      //     }
+      //   } else if(player.inRange(bad1)) {
+      //     player.use(weapon, bad1);
+      //   } else if(player.inRange(bad2)) {
+      //     player.use(weapon, bad2);
+      //   }
+      // } else {
+      //   if(player.inRange(bad1) && player.inRange(bad2)) {
+      //     if(random == 1) {
+      //       player.melee(bad1);
+      //     } else {
+      //       player.melee(bad2);
+      //     }
+      //   } else if(player.inRange(bad1)) {
+      //     player.melee(bad1);
+      //   } else if(player.inRange(bad2)) {
+      //     player.melee(bad2);
+      //   }
+      // }
 
       response.redirect("/" );
       return null;
