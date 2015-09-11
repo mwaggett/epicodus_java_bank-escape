@@ -38,10 +38,10 @@ public class App {
       int bad1_radius = 5;
       int bad2_radius = 5;
 
-      int weapon_x1 = weapon.getXCoordinate() - 5;
-      int weapon_y1 = weapon.getYCoordinate() + 5;
-      int weapon_x2 = weapon.getXCoordinate() + 5;
-      int weapon_y2 = weapon.getYCoordinate() - 5;
+      int weapon_x1;
+      int weapon_y1;
+      int weapon_x2;
+      int weapon_y2;
 
       if(!bad1.isDead()) {
         npcMovement(player, bad1);
@@ -51,14 +51,22 @@ public class App {
       }
 
       //If player is within range of a weapon, it picks up the weapon.
+
       if(player.weaponInRange(weapon)) {
         player.pickUp(weapon);
+        event_message = "Picked up weapon";
+      }
+      if(player.getWeapons().contains(weapon)) {
         weapon_x1 = player.getXCoordinate();
         weapon_y1 = player.getYCoordinate();
-        weapon_x2 = player.getXCoordinate();
-        weapon_y2 = player.getYCoordinate();
+        weapon_x2 = player.getXCoordinate() + 10;
+        weapon_y2 = player.getYCoordinate() - 10;
+      } else {
+         weapon_x1 = weapon.getXCoordinate() - 5;
+         weapon_y1 = weapon.getYCoordinate() + 5;
+         weapon_x2 = weapon.getXCoordinate() + 5;
+         weapon_y2 = weapon.getYCoordinate() - 5;
       }
-
       //If a player is close to an NPC it either has the NPC perform
       //A melee attack, or if both are close by it will choose a random NPC
       message = npcAttack(player, bad1, bad2);
